@@ -14,13 +14,12 @@
       grid-template-areas: 
          "logo search navigation"
       ;
-      grid-template-columns: 90px 1fr auto;  // search  вытянется по максимуму, navigation имеет ширину контента.
+      grid-template-columns: 90px 1fr auto;  // search  вытянется по максимуму(1fr), navigation имеет ширину контента(auto).
       align-items: center;
    }
 
    .logo{
       grid-area: logo;
-
    }
 
    .search{

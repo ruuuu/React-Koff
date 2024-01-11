@@ -1,5 +1,5 @@
 import { Header } from "./views/Header/Header";
-
+import { Footer } from "./views/Footer/Footer";
 
 const App = () => {
 
@@ -7,7 +7,7 @@ const App = () => {
     <>            {/* либо <React.Fragment></React.Fragment> */}
       <Header />
       <main></main>
-      <footer></footer>
+      <Footer />
     </>
   );
 };
