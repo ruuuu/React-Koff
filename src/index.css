@@ -9,6 +9,7 @@
   src: url('/fonts/open-sans-v40-cyrillic_latin-regular.woff2') format('woff2');
 }
 
+
 @font-face {
   font-display: swap;
   font-family: 'Open Sans';
@@ -16,6 +17,7 @@
   font-weight: 800;
   src: url('/fonts/open-sans-v40-cyrillic_latin-800.woff2') format('woff2');
 }
+
 
 @font-face {
   font-display: swap;
@@ -25,10 +27,12 @@
   src: url('/fonts/inter-v13-cyrillic_latin-regular.woff2') format('woff2');
 }
 
+
 html {
   box-sizing: border-box;
   position: relative;
 }
+
 
 *,
 *::after,
@@ -36,7 +40,8 @@ html {
   box-sizing: inherit;
 }
 
-body {
+
+#root{
   position: relative;
   min-width: 320px;
   min-height: 100vh;
@@ -47,7 +52,16 @@ body {
   font-weight: 400;
   line-height: 1.2;
   background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
 }
+
+
+main{
+  flex-grow: 1;
+}
+
 
 img,
 svg {
@@ -56,6 +70,12 @@ svg {
   height: auto;
 }
 
+
+svg{
+  max-height: 100%;
+}
+
+
 button {
   padding: 0;
   border: 0;
@@ -63,16 +83,19 @@ button {
   cursor: pointer;
 }
 
+
 a {
   text-decoration: none;
   color: inherit;
 }
+
 
 ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
+
 
 h1,
 h2,
@@ -82,6 +105,7 @@ fieldset,
 figure {
   margin: 0;
 }
+
 
 /* доступно скрываем для роботов-поисковиков*/
 .visually-hidden {

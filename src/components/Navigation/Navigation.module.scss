@@ -1,0 +1,46 @@
+.navigation{
+   display: flex;
+   align-items: center;
+   gap: 16px;
+}
+
+
+.link{
+   display: flex;
+   flex-direction: row-reverse;
+   align-items: center;
+   gap: 4px; 
+
+   @media (min-width: 580px) {
+      flex-direction: row;
+   }
+
+   svg{
+      fill: #fff;
+   }
+
+   &:hover,
+   &:active{
+      color: #780096;
+
+      svg{
+         fill: #780096;
+      }
+   }
+
+   &:focus-visible{
+      color: #780096;
+      outline-color: #780096;
+   }
+}
+
+
+.text {
+   position: fixed; // доступно скрываем
+   transform: scale(0);
+
+   @media (min-width: 580px) {
+      position: unset; 
+      transform: scale(1);
+   }
+}

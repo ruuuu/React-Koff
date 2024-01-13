@@ -1,7 +1,14 @@
 // модуль
+.header{
+   padding-top: 16px;
+   padding-bottom: 16px;
+   border-bottom: 1px solid #EEEFF2; 
+}
+
+
 .container{
    display: grid;
-   gap:16px;
+   gap: 16px;
    align-items: center;
    justify-content: space-between;
    grid-template-areas: 
@@ -18,15 +25,34 @@
       align-items: center;
    }
 
-   .logo{
-      grid-area: logo;
+}
+
+
+.logo{
+   grid-area: logo;
+   width: 94px;
+}
+
+
+.search{
+   grid-area: search;
+   width: 100%;
+   
+
+   @media (min-width: 820px) {
+      max-width: 408px;
+      justify-self: center;
    }
 
-   .search{
-      grid-area: search;
-   }
 
-  .navigation{
-      grid-area: navigation;
-  }
+   @media (min-width: 1120px) {
+      max-width: 514px;
+   }
+   
+}
+
+
+.navigation{
+   grid-area: navigation;
+   justify-self: end; // выравнивает по горизонтали
 }

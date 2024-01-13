@@ -4,7 +4,7 @@ import { Footer } from "./views/Footer/Footer";
 const App = () => {
 
   return (
-    <>            {/* либо <React.Fragment></React.Fragment> */}
+    <>            {/* либо писать так <React.Fragment></React.Fragment> */}
       <Header />
       <main></main>
       <Footer />
