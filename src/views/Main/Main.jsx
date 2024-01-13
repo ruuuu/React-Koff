@@ -1,7 +1,14 @@
 // компонент
+import { Goods } from "../../components/Goods/Goods";
+
+
 
 export const Main = () => {
+
   return (
-    <Main></Main>
+    <main>
+      {/* <Catalog /> */}
+      <Goods />
+    </main>
   );
 };
