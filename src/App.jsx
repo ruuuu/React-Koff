@@ -1,14 +1,27 @@
 import { Header } from "./views/Header/Header";
 import { Footer } from "./views/Footer/Footer";
 import { Main } from "./views/Main/Main";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect} from "react";
+import { fetchAccesToken } from './store/auth/auth.slice.js';
 
 const App = () => {
+
+  const dispatch = useDispatch()      // dispatch  нужен чтобы вызывать action, после обтрабоки  dispatch обновляется состояние
+  const { accessToken, loading } = useSelector((state)=> state.auth);  // задает доступ к state (accessToken, loading), state.auth это auth из store.js
+
+  useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию, а внутри useEffect() можно 
+    if(!accessToken){
+      dispatch(fetchAccesToken());
+    }
+    
+  }, [dispatch, accessToken]);  // коллбэк вызывается когда  меняется accessToken( нарпимер стал null).  [] - массив зависимттсей. Сюда заносятся поля, котрые используютя  вколлбэке
+
 
   return (
     <>            {/* либо писать так <React.Fragment></React.Fragment> */}
       <Header />
-      <Main />
+      { !loading && accessToken } ? <Main /> : <div> загрузка </div>
       <Footer />
     </>
   );
