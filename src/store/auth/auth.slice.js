@@ -19,8 +19,8 @@ export const fetchAccesToken = createAsyncThunk(
 
 
 const authSlice = createSlice({
-   name: 'auth',
-   initialState: {               // нач значения полей
+   name: 'auth',           // нвзвание сами придумали
+   initialState: {               // state, нач значения полей
       accessToken: localStorage.getItem('accessToken') || null,
       loading: false,               // загрузка ключа accessToken
       error: null,
@@ -31,9 +31,9 @@ const authSlice = createSlice({
          localStorage.removeItem('accessToken')
       }
    },
-   extraReducers: (builder)=>{  // три редьюсера:
+   extraReducers: (builder) => {  // три редьюсера:
       builder
-         .addCase(fetchAccesToken.pending, (state) => {  // когда  ожидаем ответ, запускается коллбэк
+         .addCase(fetchAccesToken.pending, (state) => {  // когда  ожидаем ответ от сервера, запускается коллбэк
             state.loading = true;
             state.error = null;
          })
@@ -43,7 +43,7 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = null;
          }) 
-         .addCase(fetchAccesToken.rejected, (state, action) => {
+         .addCase(fetchAccesToken.rejected, (state, action) => {  // если сервер отклонил запрос
             state.loading =  false;
             state.error = action.error.message;
          })
