@@ -1,30 +1,135 @@
 .card{
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+
+  
+   @media (min-width: 820px) {
+        
+   }
+
+   @media (min-width: 1120px) {
+         
+   }
+}
+
+
+.link{
+
+   @media (min-width: 580px) {
+      margin-bottom: 16px; 
+      padding-top: 3px;
+   }
 
 }
 
-.card {
 
-   &__link {
+.linkimg{
+   margin-bottom: 12px; 
+   display: block;
+}
+
+
+.image{
+   width: 100%;  // если картинка маленькая будет, чтобы она растянулась
+   object-fit: cover;  // contain
+   border-radius: 16px;
+   aspect-ratio: 7/6;  // размеры картинки 140px / 120px = 7/6
+
+   @media (min-width: 580px) {
+         aspect-ratio: 23/20; //
    }
 
-   &__link--img {
-   }
-
-   &__image {
-   }
-
-   &__info {
-   }
-
-   &__title {
-   }
-
-   &__price {
-   }
-
-   &__btn {
-   }
-
-   &__favorite {
+   @media (min-width: 820px) {
+         aspect-ratio: 151/125; //
    }
 }
+
+
+.info{
+   flex-grow: 1;
+         
+   @media (min-width: 580px) {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         gap: 5px;
+         margin-bottom: 20px;    
+   }
+}
+
+
+.title {
+   margin-bottom: 4px;
+   font-weight: 400;
+
+   @media (min-width: 580px) {
+         font-size: 16px;
+         margin-bottom: 0;
+   }  
+}
+
+
+.cardlink{
+
+}
+
+
+.price{
+   margin-bottom: 12px;
+   @media (min-width: 580px) {
+         font-size: 20px;
+         margin-bottom: 0;
+   } 
+}
+
+
+.cardbtn{
+   width: 100%;
+   padding: 12px 24px;
+   border: 1px solid #780096;
+   border-radius: 32px;
+   color: #780096;
+
+   &:hover{
+         color: #fff;
+         border-color: #9200B7;
+         background-color: #9200B7;
+   }
+
+   &:active{
+         color: #C0f;
+         border-color: #C0f;
+         background-color: transparent;
+   }
+}
+
+
+
+.btnfavorite {
+   position: absolute;
+   top: 12px;
+   right: 12px;
+
+   svg{
+         fill: #ffffff;
+   }
+
+   &:hover, &--active{
+         color: #780096;
+        
+         svg{
+               fill: #780096;
+         } 
+   }
+
+   &:active{
+         color: #c0f;
+        
+         svg{
+               fill: #c0f;
+         } 
+   }
+}
+

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+// получение списка категорий
 
 export const fetchСategories = createAsyncThunk(
    'categories/fetchСategories',

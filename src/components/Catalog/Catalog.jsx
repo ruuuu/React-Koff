@@ -15,11 +15,10 @@ export const Catalog = ({ data }) => {
 
                { data.map((item, i) => (           // ["Тумбы", "Стулья", "Столы"]
                      <li className={s.item} key={i}>
-                           <a className={s.link} href={`/category?slug=${item}`}> {item} </a>
+                        <a className={s.link} href={`/category?slug=${item}`}> {item} </a>
                      </li>
-                     )
-                  )            
-               }
+                  )
+               )}
    
             </ul>
          </Container>

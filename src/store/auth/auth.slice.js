@@ -1,6 +1,6 @@
 // slice формирует state(внем хранятся данные автоизации), редьюсеры
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+// получение токена авторизации
 
 export const fetchAccesToken = createAsyncThunk(
    'auth/fetchAccesToken',
