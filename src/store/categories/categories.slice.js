@@ -8,7 +8,7 @@ export const fetchСategories = createAsyncThunk(
      
      const token = state.auth.accessToken;
 
-     const response = await fetch('https://koff-api.vercel.app/api/productCategories', {
+     const response = await fetch('https://koff-api.vercel.app/api/productCategories', {  
          headers: {
             'Authorization': `Bearer ${token}`
          }
@@ -18,9 +18,9 @@ export const fetchСategories = createAsyncThunk(
          throw new Error('Не удалось получить список категорий')
       }
       
-      console.log('response.json() ' , response.json())
+      //console.log('response.json() ' , response.json()) // ["Тумбы", "Стулья", "Столы", "Пуфы и банкетки", "Кровати", "Диваны", "Полки", "Стеллажи"]
 
-      return response.json();
+      return response.json(); // вернет промис
    }
 )
 
@@ -49,7 +49,7 @@ const categoriesSlice = createSlice({
             state.error = null;
          }) 
          .addCase(fetchСategories.rejected, (state, action) => {
-            state.loading =  false;
+            state.loading = false;
             state.error = action.error.message;
          })
    }

@@ -4,7 +4,7 @@ import s from "./Catalog.module.scss";
 
 export const Catalog = ({ data }) => {
 
-   console.log('data ', data)
+   //console.log('data ', data)
 
 
 
@@ -13,7 +13,7 @@ export const Catalog = ({ data }) => {
          <Container className={s.container}>
             <ul className={s.list}>
 
-               { data.map((item, i) => (
+               { data.map((item, i) => (           // ["Тумбы", "Стулья", "Столы"]
                      <li className={s.item} key={i}>
                            <a className={s.link} href={`/category?slug=${item}`}> {item} </a>
                      </li>

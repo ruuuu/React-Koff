@@ -30,7 +30,7 @@ const App = () => {
   return (
     <>            {/* либо писать так <React.Fragment></React.Fragment> */}
       <Header />
-      { !loading && accessToken } ? <Main /> : <div> загрузка </div>
+      { !loading && accessToken  ? <Main /> : <div> загрузка </div> }
       <Footer />
     </>
   );
