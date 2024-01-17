@@ -4,21 +4,21 @@ import { CardItem } from "../CardItem/CardItem";
 
 
 
-
-export const Goods = ({ goods }) => {  //  [{}, {}, {}]
+//                деструтурируем props 
+export const Goods = ({ products }) => {  //  [{}, {}, {}]^
    
-   console.log('goods in Goods component ', goods)
+   console.log('products in Goods component ', products)
 
    return (
-      <section className={s.goods}>
+      <section className={s.products}>
          <Container>
             <h2 className={`${s.title} visually-hidden`}> Список товаров </h2>      {/*  для доступности нужен заголовок */}
             
             <ul className={s.list}>
                {
-                  goods.map((product) => (
-                     <li key={product.id}>
-                        <CardItem product={product} />
+                  products.map((productItem) => (
+                     <li key={productItem.id}>
+                        <CardItem product={productItem} /> {/* либо десутруктурируя так: <CardItem {...productItem} /> */}
                      </li>
                   )
                )}

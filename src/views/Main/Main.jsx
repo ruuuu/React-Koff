@@ -4,7 +4,7 @@ import { Catalog } from "../../components/Catalog/Catalog";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect} from "react";
 import { fetchСategories } from "../../store/categories/categories.slice.js";
-import { fetchGoods } from "../../store/goods/goods.slice.js";
+import { fetchpPoducts } from "../../store/products/products.slice.js";
 
 
 
@@ -19,23 +19,27 @@ export const Main = () => {
   // }); 
 
 
-  const { goods, loading: loadingGoods, error: errorGoods} = useSelector((state) => {  //
-    //console.log('state.goods ', state.goods) //  {goods: [{},{},{}], loading: false, error: null}
-    return state.goods;
+  const { products, loading: loadingProducts, error: errorProducts} = useSelector((state) => {  //
+    //console.log('state.products ', state.products) //  {products: [{},{},{}], loading: false, error: null}
+    return state.products;
   }); 
 
   useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchСategories), а внутри useEffect() можно 
     dispatch(fetchСategories());
-    dispatch(fetchGoods());
+    dispatch(fetchpPoducts());
   }, [ dispatch ]);  // коллбэк вызывается когда  меняется data.  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
 
 
-  if(loadingCategories){  // пока загружаются категории
-    return <div> Загрузка категорий </div>
+  if(loadingCategories || loadingProducts){  // пока загружаются категории
+    return <div> Загрузка категорий  и товаров </div>
   }
 
   if(errorCategories){
-    return <div> Ошибка: { errorCategories } </div>
+    return <div> Ошибка: { errorCategories }</div>
+  }
+
+  if(errorProducts){
+    return <div> Ошибка: { errorProducts }</div>
   }
 
 
@@ -44,7 +48,7 @@ export const Main = () => {
   return (
     <main>
       <Catalog  data={dataCategories} />
-      <Goods  goods={goods} />
+      <Goods  products={products} />
     </main>
   );
 };

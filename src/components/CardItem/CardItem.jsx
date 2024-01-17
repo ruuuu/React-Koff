@@ -2,7 +2,6 @@ import s from "./CardItem.module.scss";
 
 
 
-
 // карточка товара
 export const CardItem = ({ product }) => { 
 
@@ -18,7 +17,7 @@ export const CardItem = ({ product }) => {
             <h3 className={s.title}>
                <a className={s.cardlink} href={`/product/${product.id}`}> {product.name} </a>
             </h3> 
-            <p className={s.price}> {`${product.price.toLocaleString()}&nbsp;Р`} </p> 
+            <p className={s.price}> {`${product.price.toLocaleString()&nbsp;Р}`} </p> 
          </div>
                 
          <button className={s.cardbtn}> В корзину </button>

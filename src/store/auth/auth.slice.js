@@ -1,11 +1,13 @@
 // slice формирует state(внем хранятся данные автоизации), редьюсеры
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { API_URL } from "../../const.js";
+
 // получение токена авторизации
 
 export const fetchAccesToken = createAsyncThunk(
    'auth/fetchAccesToken',
     async() => {
-      const response = await fetch('https://koff-api.vercel.app/api/users/accessKey');
+      const response = await fetch(`${API_URL}api/users/accessKey`);
       
       if(!response.ok){
          throw new Error('Не удалось получить токен')
