@@ -4,7 +4,7 @@ import { API_URL } from "../../const.js";
 // получение списка товаров
 
 export const fetchpPoducts = createAsyncThunk(
-   'products/fetchpPoducts ',
+   'products/fetchpPoducts',
    async(_, thunkAPI) => {               // у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
      const state = thunkAPI.getState();                     // получили state
      
@@ -32,7 +32,7 @@ export const fetchpPoducts = createAsyncThunk(
 const productsSlice = createSlice({
    name: 'products',
    initialState: {               // state, нач значения полей
-      products: [],
+      products: [],              // сюда будем зановить товары
       loading: false,               // загрузка продуктов с сервера  
       error: null,
    },

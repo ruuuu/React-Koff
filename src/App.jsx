@@ -1,9 +1,102 @@
 import { Header } from "./views/Header/Header";
 import { Footer } from "./views/Footer/Footer";
-import { Main } from "./views/Main/Main";
+import { Catalog } from "./views/Catalog/Catalog";
+import { Goods } from "./views/Goods/Goods";
+import { Card } from "./components/Card/Card";
+import { Cart } from "./components/Cart/Cart";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect} from "react";
 import { fetchAccesToken } from './store/auth/auth.slice.js';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+
+
+
+// роутинг:
+const router = createBrowserRouter([
+  {
+    path: "/",  // при переходе в корень, отображется <Main />
+    element: (
+      <>
+        <Header />
+        <main>
+          <Catalog />
+          <Goods />
+        </main>
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/favorite",  // при переходе в /favorit, отображется все что в element
+    element: (
+      <>
+        <Header />
+        <main>
+          <Catalog />
+          <Goods />
+        </main>
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/category",  
+    element: (
+      <>
+        <Header />
+        <main>
+          <Catalog />
+          <Goods />
+        </main>
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/cart",  // (Корзина) при переходе в /cart, отображется все что в element
+    element: (
+      <>
+        <Header />
+        <main>
+          <Cart /> {/*  создать компонет  */}
+        </main>
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/product/:productId",  // (станица товара) 
+    element: (
+      <>
+        <Header />
+        <main>
+          <Catalog />
+          <Card />  
+        </main>
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: "/search",  
+    element: (
+      <>
+        <Header />
+        <main>
+          <Catalog />
+          <Goods />
+        </main>
+        <Footer />
+      </>
+    ),
+  },
+
+]);
+
+
+
+
 
 
 
@@ -23,17 +116,18 @@ const App = () => {
       dispatch(fetchAccesToken());
     }
     
-  }, [ dispatch, accessToken ]);  // коллбэк вызывается когда  меняется accessToken(нарпимер стал null).  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
+  }, [ dispatch, accessToken ]);  // коллбэк вызывается каждый раз когда  меняется accessToken(нарпимер стал null).  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
 
+
+  if(loading){
+    return <div>Загруpка...</div>
+  }
 
 
   return (
-    <>            {/* либо писать так <React.Fragment></React.Fragment> */}
-      <Header />
-      { !loading && accessToken  ? <Main /> : <div> загрузка </div> }
-      <Footer />
-    </>
+    <RouterProvider router={router} />
   );
 };
+
 
 export default App;
