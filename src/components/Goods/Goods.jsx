@@ -18,7 +18,7 @@ export const Goods = ({ products }) => {  //  [{}, {}, {}]^
                {
                   products.map((productItem) => (
                      <li key={productItem.id}>
-                        <CardItem product={productItem} /> {/* либо десутруктурируя так: <CardItem {...productItem} /> */}
+                        <CardItem  {...productItem} /> {/* либо по старинке недесутруктурируя так: product={productItem} */}
                      </li>
                   )
                )}

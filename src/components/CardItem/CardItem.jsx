@@ -1,23 +1,23 @@
 import s from "./CardItem.module.scss";
+import { API_URL } from "../../const";
 
 
 
 // карточка товара
-export const CardItem = ({ product }) => { 
+export const CardItem = ({ name, images: [image], price, id }) => {  // деструкрируем product
 
    return (
 
       <article className={s.card}>
-         <a className={`${s.link} ${s.linkimg}`}  href={`/product/${product.id}`}>
-                                          {/* /img/cart.jpg  */}
-            <img className={s.image} src={`https://koff-api.vercel.app/api/products/${product.images[0]}`} alt={product.name} />
+         <a className={`${s.link} ${s.linkimg}`}  href={`/product/${id}`}>
+            <img className={s.img} src={`${API_URL}${image}`} alt={name} />
          </a>
 
          <div className={s.info}>
             <h3 className={s.title}>
-               <a className={s.cardlink} href={`/product/${product.id}`}> {product.name} </a>
+               <a className={s.cardlink} href={`/product/${id}`}> {name} </a>
             </h3> 
-            <p className={s.price}> {`${product.price.toLocaleString()&nbsp;Р}`} </p> 
+            <p className={s.price}> {price.toLocaleString()}&nbsp;Р </p> 
          </div>
                 
          <button className={s.cardbtn}> В корзину </button>
