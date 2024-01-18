@@ -16,7 +16,7 @@ export const Navigation = () => {
 
          <Link className={s.link} to="/cart">
             <span className={s.text}> Корзина </span>
-            <span class="header__count"> (15) </span>
+            <span className={s.count}> (15) </span>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                <path d="M5.87329 1.33325L3.45996 3.75325" stroke="currentColor" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                <path d="M10.127 1.33325L12.5403 3.75325" stroke="currentColor" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
