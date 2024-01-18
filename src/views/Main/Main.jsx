@@ -1,10 +1,10 @@
 // компонент
-import { Goods } from "../../components/Goods/Goods";
-import { Catalog } from "../../components/Catalog/Catalog";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect} from "react";
-import { fetchСategories } from "../../store/categories/categories.slice.js";
-import { fetchpPoducts } from "../../store/products/products.slice.js";
+// import { Goods } from "../../components/Goods/Goods";
+// import { Catalog } from "../../components/Catalog/Catalog";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useEffect} from "react";
+// import { fetchСategories } from "../../store/categories/categories.slice.js";
+// import { fetchpPoducts } from "../../store/products/products.slice.js";
 
 
 
