@@ -6,7 +6,7 @@ import { API_URL } from "../../const.js";
 
 export const fetchСategories = createAsyncThunk(
    'categories/fetchСategories',
-   async(_, thunkAPI) => {               // у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
+   async(_, thunkAPI) => {               // первый парамтер не передаем(_), у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
      const state = thunkAPI.getState();                     // получили state
      
      const token = state.auth.accessToken;
@@ -18,6 +18,12 @@ export const fetchСategories = createAsyncThunk(
      });
       
       if(!response.ok){
+         if(response.status === 401){  // если токен авторизации протух
+            return thunkAPI.rejectWithValue({  // этот объект это будет payload
+               status: response.status,
+               error: 'Не удалось получить список категорий'
+            })
+         }
          throw new Error('Не удалось получить список категорий')
       }
       
@@ -31,7 +37,7 @@ export const fetchСategories = createAsyncThunk(
 
 
 const categoriesSlice = createSlice({
-   name: 'categories',
+   name: 'categories',           // нзв стейта
    initialState: {               // state, нач значения полей
       data: [],
       loading: false,               // загрузкас категорий с сервера  
@@ -47,7 +53,7 @@ const categoriesSlice = createSlice({
             state.error = null;
          })
          .addCase(fetchСategories.fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
-            state.data = action.payload;          // в  action.payload хранится то, что вернут в функции fetchСategories 
+            state.data = action.payload;          // в  action.payload хранится то, что вернут в функции fetchСategories (то что вернет сервер)
             state.loading = false;
             state.error = null;
          }) 

@@ -17,6 +17,12 @@ export const fetchpPoducts = createAsyncThunk(
      });
       
       if(!response.ok){
+         // if(response.status === 401){
+         //    return thunkAPI.rejectWithValue({  // этот объект это будет payload
+         //       status: response.status,
+         //       error: 'Не удалось получить список товаров'
+         //    })
+         // }
          throw new Error('Не удалось получить список товаров')
       }
       

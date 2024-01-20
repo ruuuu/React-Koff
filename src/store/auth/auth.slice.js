@@ -21,7 +21,7 @@ export const fetchAccesToken = createAsyncThunk(
 
 
 const authSlice = createSlice({
-   name: 'auth',           // нвзвание сами придумали
+   name: 'auth',           // нвзвание стэйта  сами придумали
    initialState: {               // state, нач значения полей
       accessToken: localStorage.getItem('accessToken') || null,
       loading: false,               // загрузка ключа accessToken

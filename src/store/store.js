@@ -4,14 +4,16 @@ import authReducer from './auth/auth.slice';  // название authReducer  �
 import categoryReducer from './categories/categories.slice'; // название categoryReducer  придумали
 import productsReducer from './products/products.slice';
 import productReducer from './product/product.slice';
+import { apiTokenErrorMiddleware } from "./middleware";
 
 
 
-export const store =  configureStore({  // хранилище state-ов
+export const store = configureStore({  // хранилище state-ов
    reducer: {
       auth: authReducer,
       categories: categoryReducer, 
       products: productsReducer,
       product: productReducer,
-   }
+   },
+   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiTokenErrorMiddleware)
 })

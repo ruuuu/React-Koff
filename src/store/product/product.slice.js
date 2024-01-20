@@ -20,6 +20,12 @@ export const fetchProduct = createAsyncThunk(
       console.log('response from product with id', response);
       
       if(!response.ok){
+         if(response.status === 401){
+            return thunkAPI.rejectWithValue({  // этот объект это будет payload
+               status: response.status,
+               error: 'Не удалось получить инфу о товаре с id'
+            })
+         }
          throw new Error('Не удалось получить инфу о товаре с id')
       }
       
