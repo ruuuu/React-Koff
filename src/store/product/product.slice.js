@@ -41,8 +41,8 @@ export const fetchProduct = createAsyncThunk(
 const productSlice = createSlice({
    name: 'product',
    initialState: {               // state, нач значения полей
-      product: {},              // сюда будем зановить товар
-      loading: false,               // загрузка продукта с сервера  
+      data: null,              // сюда будем зановить товар полученный  с сервера
+      loading: false,               // сервер отдал ответ
       error: null,
    },
    reducers: {
@@ -55,7 +55,7 @@ const productSlice = createSlice({
             state.error = null;
          })
          .addCase(fetchProduct.fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
-            state.product = action.payload;          // в  action.payload хранится то, что вернут в функции fetchpPoduct
+            state.data = action.payload;          // в  action.payload хранится то, что вернут в функции fetchpPoduct
             state.loading = false;
             state.error = null;
          }) 

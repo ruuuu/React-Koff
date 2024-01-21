@@ -1,4 +1,4 @@
-// slice формирует state(внем хранятся данные автоизации), редьюсеры
+// createSlice формирует state(в нем хранятся данные (автоизациив данном случае)), редьюсеры
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../const.js";
 

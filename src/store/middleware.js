@@ -1,13 +1,18 @@
 import { fetchAccesToken } from "./auth/auth.slice";
 
 
-
-export const apiTokenErrorMiddleware  = (store) => (next) => async(action) => {  // Middleware работа так: 1-ая фуния возвращает фукницю, next-это метод, 2-ая фукния принимет next и возвращает 3-ю функцию
+//                                    storeApi
+export const apiTokenErrorMiddleware  = (store) => (next) => async(action) => {  // Middleware работа так: 1-ая фуния возвращает фукницю, next-это фукнция, 2-ая фукния принимет next и возвращает 3-ю функцию
    
+   const state = store.getState();
+
    // action.payload?.status  если action.payload будет undefined, то оишбки не произойдет
    if(action.type.endsWith('rejected') && action.payload?.status === 401) {    // action.type = categories/fetchCategories/rejected
-      const refreshAction = await store.dispatch(fetchAccesToken());
-      console.log('refreshAction ', refreshAction)
- }   
+      if(!store.auth.loading){
+         await store.dispatch(fetchAccesToken());  // отправка запроса на получение токена
+      }
+   }  
+ 
+   next(action);
 
 }
