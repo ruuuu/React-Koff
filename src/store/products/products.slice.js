@@ -5,12 +5,26 @@ import { API_URL } from "../../const.js";
 
 export const fetchpPoducts = createAsyncThunk(
    'products/fetchpPoducts',
-   async(_, thunkAPI) => {               // у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
+   async(param, thunkAPI) => {               // у thunkAPI есть метод getState() для получения state(из store.js), param = {}
      const state = thunkAPI.getState();                     // получили state
      
      const token = state.auth.accessToken;
 
-     const response = await fetch(`${API_URL}api/products`, {  
+     const queryParams = new URLSearchParams();
+     
+    
+     if(param){  // объект { category: 'Стеллажи', q: null}
+         for (const key in param) { 
+            if(Object.hasOwnProperty.call(param, key) && param[key]){  
+               queryParams.append(key, param[key]);
+            }
+         }
+      }
+
+     //console.log(queryParams + ' ') // category=%D0%A1%D1%82%D0%B5%D0%BB%D0%BB%D0%B0%D0%B6%D0%B8 
+
+
+     const response = await fetch(`${API_URL}api/products/${queryParams}`, {  
          headers: {
             'Authorization': `Bearer ${token}`
          }

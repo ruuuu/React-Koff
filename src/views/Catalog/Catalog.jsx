@@ -41,7 +41,7 @@ export const Catalog = () => {
 
                { data.map((item, i) => (           // data=["Тумбы", "Стулья", "Столы"]
                      <li className={s.item} key={i}>
-                        <Link className={s.link} to={`/category?slug=${item}`}> {item} </Link>
+                        <Link className={s.link} to={`/category?category=${item}`}> {item} </Link>
                      </li>
                   )
                )}
