@@ -3,8 +3,8 @@ import { API_URL } from "../../const.js";
 
 // получение списка товаров
 
-export const fetchpPoducts = createAsyncThunk(
-   'products/fetchpPoducts',
+export const fetchProducts = createAsyncThunk(
+   'products/fetchPoducts',
    async(param, thunkAPI) => {               // у thunkAPI есть метод getState() для получения state(из store.js), param = {}
      const state = thunkAPI.getState();                     // получили state
      
@@ -24,7 +24,7 @@ export const fetchpPoducts = createAsyncThunk(
      //console.log(queryParams + ' ') // category=%D0%A1%D1%82%D0%B5%D0%BB%D0%BB%D0%B0%D0%B6%D0%B8 
 
 
-     const response = await fetch(`${API_URL}api/products/${queryParams}`, {  
+     const response = await fetch(`${API_URL}api/products?${queryParams}`, {  
          headers: {
             'Authorization': `Bearer ${token}`
          }
@@ -52,27 +52,37 @@ export const fetchpPoducts = createAsyncThunk(
 const productsSlice = createSlice({
    name: 'products',
    initialState: {               // state, нач значения полей
-      products: [],              // сюда будем заносить товары полученные с сервера
+      data: [],              // сюда будем заносить товары полученные с сервера
       loading: false,               // загрузка продуктов с сервера  
       error: null,
+      pagination: null
    },
    reducers: {
       
    },
    extraReducers: (builder) => {  // три редьюсера:
       builder
-         .addCase(fetchpPoducts.pending, (state) => {  // когда  ожидаем ответа от сервера, запускается коллбэк
+         .addCase(fetchProducts.pending, (state) => {  // когда  ожидаем ответа от сервера, запускается коллбэк
             state.loading = true;
             state.error = null;
+            state.pagination = null;
          })
-         .addCase(fetchpPoducts.fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
-            state.products = action.payload;          // в  action.payload хранится то, что вернут в функции fetchGoods
+         .addCase(fetchProducts.fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
+            if(Array.isArray(action.payload)){           // если с сервера пришел массив
+               state.data = action.payload;          // в  action.payload хранится то, что вернут в функции fetchProducts
+               state.pagination = null;
+            }
+            else{                                  // если придет объект { data: [], paginatin: {currentPage, totalPages, totalProducts, limit} } 
+               state.data = action.payload.data;    // в  action.payload хранится то, что вернут в функции fetchProducts
+               state.pagination = action.payload.pagination;
+            }
             state.loading = false;
             state.error = null;
          }) 
-         .addCase(fetchpPoducts.rejected, (state, action) => {
+         .addCase(fetchProducts.rejected, (state, action) => {
             state.loading = false;
             state.error = action.error.message;
+            state.pagination = null;
          })
    }
 })

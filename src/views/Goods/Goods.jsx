@@ -3,7 +3,7 @@ import { Container } from "../Container/Container";
 import { CardItem } from "../../components/CardItem/CardItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect} from "react";
-import { fetchpPoducts } from "../../store/products/products.slice";
+import { fetchProducts } from "../../store/products/products.slice";
 import { useSearchParams } from "react-router-dom";
 
 
@@ -22,15 +22,17 @@ export const Goods = () => {
    const q = searchParam.get('q');                             // получить значение searh-параметра  q(для поиска)
 
 
-   const { products, loading, error } = useSelector((state) => {  //
-      //console.log('state.products ', state.products) //  {products: [{},{},{}], loading: false, error: null}
-      return state.products;
+   const { data, loading, error } = useSelector((state) => {  //
+      console.log('state.products ', state.products) //  
+      return state.products;  // { data: Array(1),  loading: true,  error: null,  pagination: null }
    }); 
   
 
+
+
    useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchpPoducts), а внутри useEffect() можно 
-      dispatch(fetchpPoducts({ category, q }));
-   }, [ dispatch, category, q ]);  //  коллбэк каждый раз вызывается когда  меняется category, q.  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
+      dispatch(fetchProducts({ category, q }));
+   }, [ dispatch, category, q ]);  //  коллбэк каждый раз вызывается когда  меняется category или q.  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
   
   
    if(loading){  
@@ -43,18 +45,17 @@ export const Goods = () => {
   
    
 
-   return 
-      (
+   return (
       <section className={s.products}>
          <Container>
             <h2 className={`${s.title} visually-hidden`}> Список товаров </h2> 
             
-            { products.length ?
+            { data.length ?
                <ul className={s.list}>
                   {
-                     products.map((productItem) => (
+                     data.map((productItem) => (
                         <li key={productItem.id}>
-                           <CardItem  {...productItem} /> {/* либо по старинке(недесутруктурируя) так: product={productItem} */}
+                           <CardItem  {...productItem} /> {/* либо по старинке(недеструктурируя) так: product={productItem} */}
                         </li>
                      )
                   )}

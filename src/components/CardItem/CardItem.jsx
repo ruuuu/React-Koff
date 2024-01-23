@@ -3,7 +3,7 @@ import { API_URL } from "../../const";
 import { Link } from "react-router-dom";
 
 
-// карточка товара
+// карточка товара  в списке товаров
 export const CardItem = ({ name, images: [image], price, id }) => {  // деструкрируем product
 
    return (

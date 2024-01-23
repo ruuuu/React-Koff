@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/favorite",  // при переходе в /favorit, отображется все что в element
+    path: "/favorite",  // при переходе в /favorite, отображется все что в element
     element: (
       <>
         <Header />
