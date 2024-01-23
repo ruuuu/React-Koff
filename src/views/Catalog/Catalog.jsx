@@ -5,6 +5,7 @@ import { useEffect} from "react";
 import { fetchСategories } from "../../store/categories/categories.slice.js";
 import { Link } from "react-router-dom";
 
+// в папке viewы добавбляем  компоненты которые не дублируются
 
 
 export const Catalog = () => {
