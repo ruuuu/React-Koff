@@ -11,9 +11,11 @@ export const fetchProducts = createAsyncThunk(
      const token = state.auth.accessToken;
 
      const queryParams = new URLSearchParams();
-     
     
-     if(param){  // объект { category: 'Стеллажи', q: null}
+
+     console.log('param ', param)
+    
+     if(param){               // объект { category: 'Стеллажи',  q: null } или если '/favorite' то {list: '53,7,8'}
          for (const key in param) { 
             if(Object.hasOwnProperty.call(param, key) && param[key]){  
                queryParams.append(key, param[key]);
@@ -21,10 +23,12 @@ export const fetchProducts = createAsyncThunk(
          }
       }
 
-     //console.log(queryParams + ' ') // category=%D0%A1%D1%82%D0%B5%D0%BB%D0%BB%D0%B0%D0%B6%D0%B8 
+      console.log('queryParams ', queryParams + ' ')
+
+     //console.log(queryParams + ' ') // category=%D0%A1%D1%82%D0%B5%D0%BB%D0%BB%D0%B0%D0%B6%D0%B8  или если '/favorite', то  list=53%2C7%2C8 
 
 
-     const response = await fetch(`${API_URL}api/products?${queryParams}`, {  
+     const response = await fetch(`${API_URL}api/products?${queryParams}`, {    // если на странице /favorite, то products?list=53%2C7%2C8
          headers: {
             'Authorization': `Bearer ${token}`
          }
