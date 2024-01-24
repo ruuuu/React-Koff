@@ -18,12 +18,19 @@ export const Goods = () => {
    // searchParam = {}
 
   
-   const category = searchParam.get('category');               // получить значение searh-параметра  category
-   const q = searchParam.get('q');                             // получить значение searh-параметра  q(для поиска)
+   const category = searchParam.get('category');               // получить значение search-параметра  category
+   const q = searchParam.get('q');                             // получить значение search-параметра  q(для поиска)
 
 
-   const { data, loading, error } = useSelector((state) => {  //
-      console.log('state.products ', state.products) //  
+   const favoriteList = useSelector((state) => {  
+      // console.log('state.favorite ', state.favorite) //  
+      return state.favorite.favoriteList;  // [id, id, id]
+   }); 
+
+
+
+   const { data, loading, error } = useSelector((state) => {  
+      console.log('state.products ', state.products)  
       return state.products;  // { data: Array(1),  loading: true,  error: null,  pagination: null }
    }); 
   
@@ -50,6 +57,8 @@ export const Goods = () => {
          <Container>
             <h2 className={`${s.title} visually-hidden`}> Список товаров </h2> 
             
+           
+
             { data.length ?
                <ul className={s.list}>
                   {

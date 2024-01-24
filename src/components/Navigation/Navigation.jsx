@@ -1,11 +1,23 @@
 import s from "./Navigation.module.scss";
 import { Link } from "react-router-dom";
 
+import { useNavigate } from 'react-router-dom';
+
 
 
 export const Navigation = () => {
 
+   // const navigate = useNavigate();  // в 6-ой версии это используется
+
+
+   // const handleFavorite = () => {
+
+
+   //    navigate('/favorite');
+   // }
+
    return (
+
       <nav className={s.navigation}>
          <Link className={s.link}  to="/favorite"> {/*  вместо <a></a> используем Link, чтобы не перезагружалась станица, вместо href ставим to */}
             <span className={s.text}> Избранное </span>

@@ -12,7 +12,13 @@ export const SearchForm = () => {
    const handleSubmit = (event) => {
       console.log('event ', event);
       event.preventDefault();
+     
+      const searcQuery = event.target.search.value;            // event.target-form, search-name  у поля
 
+      if(searcQuery.trim()){ 
+         navigate(`search?q=${encodeURIComponent(searcQuery)}`);  // переход по урлу search?q=, декодируем searcQuery
+         event.target.reset();         // form.reset()
+      }
    }
 
    
