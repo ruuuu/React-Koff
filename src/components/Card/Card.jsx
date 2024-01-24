@@ -16,7 +16,7 @@ import { FavoriteButon } from "../FavoriteButton/FavoriteButon";
 // страница товара
 export const Card = () => {
 
-   const dispatch = useDispatch();      // dispatch  нужен чтобы вызывать action, после обтрабоки  dispatch обновляется состояние
+   const dispatch = useDispatch();      // dispatch  нужен чтобы вызывать action(редьюсеры), после обтрабоки  dispatch обновляется состояние
 
    const { productId } = useParams();                          // хук, нужен чтобы получить id товара из урла /product/:productId
 
@@ -26,7 +26,6 @@ export const Card = () => {
 
    useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchProduct), а внутри useEffect() можно 
       dispatch(fetchProduct(productId));
-     
    }, [ dispatch, productId ]);  // коллбэк вызывается когда  меняется productId.  [ dispatch, productId ] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
   
 
@@ -72,7 +71,7 @@ export const Card = () => {
 
                      <div className={s.btns}>
                         <button className={s.btn} type="button"> В Корзину </button>
-                        <FavoriteButon className={s.like} id={data.id} />
+                        <FavoriteButon className={s.like}  id={data.id} />
                      </div>
                </div>
             </div>

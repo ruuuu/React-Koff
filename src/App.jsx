@@ -102,7 +102,7 @@ const router = createBrowserRouter([
 
 const App = () => {
 
-  const dispatch = useDispatch()      // dispatch  нужен чтобы вызывать action, после отработки  dispatch, обновляется state
+  const dispatch = useDispatch()      // dispatch  нужен чтобы вызывать action(редьюсер), после отработки  dispatch, обновляется state
   const { accessToken, loading } = useSelector((state)=> state.auth);  // задает доступ к state = {accessToken, loading, error}, state.auth = {accessToken, error, loading} это auth из store.js
 
 

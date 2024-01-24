@@ -1,10 +1,25 @@
 import s from './SearchForm.module.scss';
+import { useNavigate } from 'react-router-dom';
 
+
+
+// форма поиска
 
 export const SearchForm = () => {
 
+   const navigate = useNavigate();  // в 6-ой версии это используется
+
+   const handleSubmit = (event) => {
+      console.log('event ', event);
+      event.preventDefault();
+
+   }
+
+   
+
    return (
-      <form className={s.form} action="/api/product">
+      //                      событие onSubmit
+      <form className={s.form}  onSubmit={handleSubmit} >
          <input className={s.input} type="search" name="search" placeholder="Введите текст" />
          
          <button className={s.button} type="submit">
