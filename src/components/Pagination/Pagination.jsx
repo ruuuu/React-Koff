@@ -32,13 +32,13 @@ export const Pagination = ({ pagination }) => {  // pagination: { currentPage: 1
   
 
    const width = currentPage * limit;
-   const paginationCurrent = totalProducts === limit ? totalProducts;
+   const paginationCurrent = totalProducts === limit ? totalProducts : width < totalProducts ? width : width - limit + (totalProducts % limit);
 
  
 
    return (
       <div className={s.pagination}>
-         <div className={s.bar} >    {/* style="--width: calc(21 / 31 * 100%)" css-переменная width это ширина фиолетвой части  */}
+         <div className={s.bar} style={{width: `calc(${width < totalProducts ? width : totalProducts} / ${totalProducts} * 100%)`}}>    {/* это ширина фиолетвой части  */}
             <div className={s.barWidth}></div>
          </div>
 
@@ -50,9 +50,9 @@ export const Pagination = ({ pagination }) => {  // pagination: { currentPage: 1
             </Link>
 
             <p className={s.info}>
-               <span> {currentPage} </span>
+               <span> {paginationCurrent} </span>
                   из
-               <span> {totalPages } </span>
+               <span> {totalProducts} </span>
             </p>
 
             <Link  className={nextPageUrl ? '' : s.disabled}  to={nextPageUrl}>

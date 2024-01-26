@@ -56,7 +56,7 @@ export const Goods = () => {
       
       if(pathname === '/favorite'){
          console.log('меня еще раз вызвали')
-         dispatch(fetchProducts({ list: favoriteList.join(','), page }));                     // favoriteList переименовали в list(сервер принимает), favoriteList.join(',') - из массива создали строку 'id, id, id'
+         dispatch(fetchProducts({ list: favoriteList.join(','),  page }));                     // favoriteList переименовали в list(сервер принимает), favoriteList.join(',') - из массива создали строку 'id, id, id'
       }
    }, [ dispatch,  favoriteList,  pathname,  page ]);        // коллбэк зависит от favoriteList,  pathname. Когда они меняются, колллбэк вызвется
   
