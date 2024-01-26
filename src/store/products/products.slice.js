@@ -15,7 +15,7 @@ export const fetchProducts = createAsyncThunk(
 
      console.log('param ', param)
     
-     if(param){               // объект { category: 'Стеллажи',  q: null } или если '/favorite' то {list: '53,7,8'}
+     if(param){               // объект { category: 'Стеллажи',  q: null } или если '/favorite' то { list: '53,7,8' }
          for (const key in param) { 
             if(Object.hasOwnProperty.call(param, key) && param[key]){  
                queryParams.append(key, param[key]);
