@@ -1,14 +1,28 @@
 import s from "./Navigation.module.scss";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect} from "react";
+import { fetchCart } from "../../store/cart/cart.slice";
 
-import { useNavigate } from 'react-router-dom';
 
 
+export const Navigation = () => {
 
-export const Navigation = ({ totalCount }) => {
+   const dispatch = useDispatch()      
+   
+   const { totalCount } = useSelector((state) => {  //
+      //console.log('state.cart ', state.cart)   // { products, totalPrice, totalCount, loadingFetch,  loadingAdd, loadingUpdate, loadingRemove, error}
+      return state.cart;
+   }); 
 
+
+   useEffect(() => {  
+      dispatch(fetchCart());
+     
+   }, [ dispatch ]);       
   
-  
+
+
 
    return (
 

@@ -23,7 +23,7 @@ export const Cart = () => {
    useEffect(() => {  
       dispatch(fetchCart());
      
-   }, [ dispatch]); 
+   }, [ dispatch ]);        // зависимость от products, totalPrice, totalCount
   
 
    if(loadingFetch){  // пока загружаются товары
