@@ -4,6 +4,7 @@ import authReducer from './auth/auth.slice';  // название authReducer  �
 import categoryReducer from './categories/categories.slice'; // название categoryReducer  придумали
 import productsReducer from './products/products.slice';
 import productReducer from './product/product.slice';
+import cartReducer from './cart/cart.slice';
 import { apiTokenErrorMiddleware } from "./middleware";
 import favoriteReducer from './favorite/favorite';
 
@@ -15,6 +16,7 @@ export const store = configureStore({  // хранилище state-ов
       products: productsReducer,
       product: productReducer,
       favorite: favoriteReducer,
+      cart: cartReducer,
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiTokenErrorMiddleware),
    

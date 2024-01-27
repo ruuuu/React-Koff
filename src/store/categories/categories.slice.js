@@ -29,7 +29,7 @@ export const fetchСategories = createAsyncThunk(
       
       //console.log('response.json() ' , response.json()) // ["Тумбы", "Стулья", "Столы", "Пуфы и банкетки", "Кровати", "Диваны", "Полки", "Стеллажи"]
 
-      return response.json(); // вернет промис
+      return await response.json();  // без await вернет промис
    }
 )
 
@@ -39,8 +39,8 @@ export const fetchСategories = createAsyncThunk(
 const categoriesSlice = createSlice({
    name: 'categories',           // нзв стейта
    initialState: {               // state, нач значения полей
-      data: [],
-      loading: false,               // загрузкас категорий с сервера  
+      data: [],                  //  в сервера придет [], название data сами придумали
+      loading: false,               // загрузка категорий с сервера  
       error: null,
    },
    reducers: {

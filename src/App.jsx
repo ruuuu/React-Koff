@@ -3,7 +3,7 @@ import { Footer } from "./views/Footer/Footer";
 import { Catalog } from "./views/Catalog/Catalog";
 import { Goods } from "./views/Goods/Goods";
 import { Card } from "./components/Card/Card";
-import { Cart } from "./components/Cart/Cart";
+import { Cart } from "./views/Cart/Cart";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect} from "react";
 import { fetchAccesToken } from './store/auth/auth.slice.js';
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       <>
         <Header />
         <main>
-          <Cart /> {/*  создать компонет  */}
+          <Cart /> 
         </main>
         <Footer />
       </>
@@ -103,7 +103,7 @@ const router = createBrowserRouter([
 const App = () => {
 
   const dispatch = useDispatch()      // dispatch  нужен чтобы вызывать action(редьюсер), после отработки  dispatch, обновляется state
-  const { accessToken, loading } = useSelector((state)=> state.auth);  // задает доступ к state = {accessToken, loading, error}, state.auth = {accessToken, error, loading} это auth из store.js
+  const { accessToken, loading } = useSelector((state) => state.auth);  // задает доступ к state = {accessToken, loading, error}, state.auth = {accessToken, error, loading} это auth из store.js
 
 
   // const { accessToken, loading } = useSelector((state)=> {  //
@@ -114,6 +114,7 @@ const App = () => {
   useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchAccesToken), а внутри useEffect() можно 
     if(!accessToken){
       dispatch(fetchAccesToken());
+
     }
     
   }, [ dispatch, accessToken ]);  // коллбэк вызывается каждый раз когда  меняется accessToken(нарпимер стал null).  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
