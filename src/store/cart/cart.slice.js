@@ -170,7 +170,7 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(addProductToCart.fulfilled, (state, action) => {  
-            state.products = action.payload.products;          // в  action.payload хранится то, что вернут в функции fetchСart (то что вернет сервер)
+            state.products = action.payload.products;          
             state.totalPrice = action.payload.totalPrice; 
             state.totalCount = action.payload.totalCount;         
             state.loadingAdd = false;
