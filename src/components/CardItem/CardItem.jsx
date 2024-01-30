@@ -2,10 +2,37 @@ import s from "./CardItem.module.scss";
 import { API_URL } from "../../const";
 import { Link } from "react-router-dom";
 import { FavoriteButon } from "../FavoriteButton/FavoriteButon";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductToCart } from "../../store/cart/cart.slice";
 
 
-// карточка товара  в списке товаров
+
+// карточка товара  на странице товаров
 export const CardItem = ({ name, images: [image], price, id }) => {  // деструкрируем product
+
+   const dispatch = useDispatch();
+   const cartList = useSelector((state)=> state.cart.products);  // список товаров Коризны [id, id]
+   console.log('cartList from CardItem ', cartList)
+
+
+   const isCart = cartList.includes(id);         // если id в массиве cartList
+   
+
+
+   const handlerCartClick = () => {
+      if(isCart){
+        // dispatch(updateProductToCart({ productId: id, quantity: 1 }));  // вызов редьюсера
+        console.log('товар есть уже в корзине')
+      }
+      else{
+         dispatch(addProductToCart({ productId: id, quantity: 1 }));  // вызов редьюсера
+      }
+      
+   }
+
+   
+   
 
    return (
 
@@ -21,7 +48,7 @@ export const CardItem = ({ name, images: [image], price, id }) => {  // дест
             <p className={s.price}> {price.toLocaleString()}&nbsp;Р </p> 
          </div>
                 
-         <button className={s.cardbtn}> В корзину </button>
+         <button className={s.cardbtn}  onClick={handlerCartClick}> В корзину </button>
 
          <FavoriteButon className={s.btnfavorite}  id={id}  />
       </article>

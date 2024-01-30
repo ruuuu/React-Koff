@@ -22,7 +22,7 @@ export const fetchCart = createAsyncThunk(
             throw new Error('Не удалось получить список товаров Корзины')
          }
 
-         return await response.json(); // без await вернет промис. { products:[], totalPrice:0, totalCount:0 }
+         return await response.json(); // без await вернет промис.   { products: [ {id, article, quantity, productId, images: [], name, price, characteristics: []} ],    totalPrice:0,    totalCount:0 }
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -36,27 +36,27 @@ export const fetchCart = createAsyncThunk(
 
 export const addProductToCart = createAsyncThunk(  
    'cart/addProductToCart',
-   //  либо  async(_, { getState, rejectWithValue })
+   //  либо  async(productData, { getState, rejectWithValue })
    async(productData, thunkAPI) => {               
       const state = thunkAPI.getState();                  
      
       const token = state.auth.accessToken;
 
       try{
-         const response = await fetch(`${API_URL}/api/cart/products`, {  
+         const response = await fetch(`${API_URL}api/cart/products`, {  
             headers: {
                "Content-Type": "application/json",
                'Authorization': `Bearer ${token}`
             },
             method: "POST",
-            body: JSON.stringify(productData),         // { productId: n, quantity: n }
+            body: JSON.stringify(productData),         // productData = { productId: id, quantity: n }
          });
 
          if(!response.ok){
             throw new Error('Не удалось добавить товар в  Корзину')
          }
 
-         return await response.json(); 
+         return await response.json();   // ответ { product: {},  productCart: {poductId: 30, quantity: 1}, totalCount: 1}
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -112,7 +112,7 @@ export const updateProductToCart = createAsyncThunk(
                'Authorization': `Bearer ${token}`
             },
             method: "PUT",
-            body: JSON.stringify(productData),         // {productId: n, quantity: n}
+            body: JSON.stringify(productData),         // { productId: n, quantity: n }
          });
 
          if(!response.ok){
