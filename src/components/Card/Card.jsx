@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../store/product/product.slice.js";
 import { Slider } from "../Slider/Slider";
 import { FavoriteButon } from "../FavoriteButton/FavoriteButon";
-
+import { AddCartButton } from "../AddCartButton/AddCartButton";
 
 
 // в папке components добавляем переиспользуемые компоненты
@@ -47,7 +47,7 @@ export const Card = () => {
      
       <section className={s.card}> 
          <Container className={s.container}>       {/* Грид контегнйер  */}
-            <h2 className={s.title}> тест </h2>  {/* {data.name}  */}
+            <h2 className={s.title}> {data.name} </h2>  
 
             <Slider data={data}  />               
 
@@ -70,8 +70,8 @@ export const Card = () => {
                      </table>
 
                      <div className={s.btns}>
-                        <button className={s.btn} type="button"> В Корзину </button>
-                        <FavoriteButon className={s.like}  id={data.id} />
+                        <AddCartButton  className={s.btn} id={data.id} />    
+                        <FavoriteButon  className={s.like}  id={data.id} />
                      </div>
                </div>
             </div>

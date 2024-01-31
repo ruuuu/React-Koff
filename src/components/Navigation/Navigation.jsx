@@ -8,11 +8,11 @@ import { fetchCart } from "../../store/cart/cart.slice";
 
 export const Navigation = () => {
 
-   const dispatch = useDispatch()      
+   const dispatch = useDispatch();      
    
-   const { totalCount } = useSelector((state) => {  //
+   const  products  = useSelector((state) => {  //
       //console.log('state.cart ', state.cart)   // { products, totalPrice, totalCount, loadingFetch,  loadingAdd, loadingUpdate, loadingRemove, error}
-      return state.cart;
+      return state.cart.products;
    }); 
 
 
@@ -37,7 +37,7 @@ export const Navigation = () => {
 
          <Link className={s.link} to="/cart">
             <span className={s.text}> Корзина </span>
-            <span className={s.count}> ({totalCount}) </span>  
+            <span className={s.count}> ( {products.length} ) </span>  
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                <path d="M5.87329 1.33325L3.45996 3.75325" stroke="currentColor" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                <path d="M10.127 1.33325L12.5403 3.75325" stroke="currentColor" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>

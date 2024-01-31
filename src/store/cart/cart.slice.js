@@ -56,7 +56,8 @@ export const addProductToCart = createAsyncThunk(
             throw new Error('Не удалось добавить товар в  Корзину')
          }
 
-         return await response.json();   // ответ { product: {},  productCart: {poductId: 30, quantity: 1}, totalCount: 1}
+         return await response.json();   // ответ: { product: {},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
+         
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -106,13 +107,13 @@ export const updateProductToCart = createAsyncThunk(
       const token = state.auth.accessToken;
 
       try{
-         const response = await fetch(`${API_URL}/api/cart/products/{productData.id}`, {  
+         const response = await fetch(`${API_URL}/api/cart/products/${productData.id}`, {  
             headers: {
                "Content-Type": "application/json",
                'Authorization': `Bearer ${token}`
             },
             method: "PUT",
-            body: JSON.stringify(productData),         // { productId: n, quantity: n }
+            body: JSON.stringify(productData),         // { productId: id, quantity: n }
          });
 
          if(!response.ok){
@@ -134,7 +135,7 @@ export const updateProductToCart = createAsyncThunk(
 const cartSlice = createSlice({
    name: 'cart',           // нзв стейта
    initialState: {               // state, нач значения полей
-      products: [],                 // с сервера придут эти 3 поля: 
+      products: [],                 // с сервера придут эти 3 поля. products-[{},{}]- товары  Корзины
       totalPrice: 0,                
       totalCount: 0,
       loadingFetch: false,               // получени товаров с Корзины
@@ -153,13 +154,14 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(fetchCart.fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
+            console.log('action.payload in fetchCart', action.payload)
             state.products = action.payload.products;          // в  action.payload хранится то, что вернут в функции fetchСart (то что вернет сервер)
             state.totalPrice = action.payload.totalPrice; 
             state.totalCount = action.payload.totalCount; 
             state.loadingFetch = false;
             state.error = null;
          }) 
-         .addCase(fetchCart .rejected, (state, action) => {
+         .addCase(fetchCart.rejected, (state, action) => {
             state.loadingFetch = false;
             state.error = action.error.message;
          })
@@ -170,15 +172,16 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(addProductToCart.fulfilled, (state, action) => {  
-            state.products = action.payload.products;          
+            console.log('action.payload in addProductToCart', action.payload)  // ответ от сервера:  { product: {},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
+            state.products.push(action.payload.product);         
             state.totalPrice = action.payload.totalPrice; 
             state.totalCount = action.payload.totalCount;         
             state.loadingAdd = false;
             state.error = null;
          }) 
          .addCase(addProductToCart.rejected, (state, action) => {
-               state.loadingAdd = false;
-               state.error = action.error.message;
+            state.loadingAdd = false;
+            state.error = action.error.message;
          }) 
          
          //-------------------
@@ -187,6 +190,7 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(removeProductFromCart.fulfilled, (state, action) => {  
+            
             state.products = action.payload.products;         
             state.totalPrice = action.payload.totalPrice; 
             state.totalCount = action.payload.totalCount;         
@@ -194,8 +198,8 @@ const cartSlice = createSlice({
             state.error = null;
          }) 
          .addCase(removeProductFromCart.rejected, (state, action) => {
-               state.loadingRemove = false;
-               state.error = action.error.message;
+            state.loadingRemove = false;
+            state.error = action.error.message;
          }) 
 
          //---------------------
@@ -211,8 +215,8 @@ const cartSlice = createSlice({
             state.error = null;
          }) 
          .addCase(updateProductToCart.rejected, (state, action) => {
-               state.loadingUpdate = false;
-               state.error = action.error.message;
+            state.loadingUpdate = false;
+            state.error = action.error.message;
          }) 
    }
 })
