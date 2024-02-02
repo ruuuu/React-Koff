@@ -2,7 +2,7 @@ import s from "./CardItem.module.scss";
 import { API_URL } from "../../const";
 import { Link } from "react-router-dom";
 import { FavoriteButon } from "../FavoriteButton/FavoriteButon";
-import { AddCartButton } from "../AddCartButton/AddCartButton";
+import { AddCartButton } from "../addCartButton/addCartButton";
 
 
 

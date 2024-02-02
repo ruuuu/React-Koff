@@ -5,7 +5,7 @@ import { API_URL } from "../../const.js";
 // получение товаров из Корзины
 export const fetchCart = createAsyncThunk(
    'cart/fetchCart',
-   //  либо  async(_, { getState, rejectWithValue })
+  //  либо  async(productData, { getState, rejectWithValue }) // деструкрировали thunkAPI
    async(_, thunkAPI) => {               // первый парамтер не передаем(_), у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
       const state = thunkAPI.getState();                     // получили state
      
@@ -22,7 +22,7 @@ export const fetchCart = createAsyncThunk(
             throw new Error('Не удалось получить список товаров Корзины')
          }
 
-         return await response.json(); // без await вернет промис.   { products: [ {id, article, quantity, productId, images: [], name, price, characteristics: []} ],    totalPrice:0,    totalCount:0 }
+         return await response.json(); // без await вернет промис.   { products: [ {id, article, quantity, productId, images: [], name, price, characteristics: []}, {}, {} ],    totalPrice:0,    totalCount:0 }
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -36,7 +36,7 @@ export const fetchCart = createAsyncThunk(
 
 export const addProductToCart = createAsyncThunk(  
    'cart/addProductToCart',
-   //  либо  async(productData, { getState, rejectWithValue })
+   //  либо  async(productData, { getState, rejectWithValue }) 
    async(productData, thunkAPI) => {               
       const state = thunkAPI.getState();                  
      
@@ -71,13 +71,13 @@ export const addProductToCart = createAsyncThunk(
 export const removeProductFromCart = createAsyncThunk(
    'cart/removeProductFromCart ',
    //  либо  async(_, { getState, rejectWithValue })
-   async(productData, thunkAPI) => {              
+   async(productId, thunkAPI) => {              
       const state = thunkAPI.getState();                    
      
       const token = state.auth.accessToken;
 
       try{
-         const response = await fetch(`${API_URL}/api/cart/products/{productData.id}`, {  
+         const response = await fetch(`${API_URL}api/cart/products/${productId}`, {  
             headers: {
                'Authorization': `Bearer ${token}`
             },
@@ -107,7 +107,7 @@ export const updateProductToCart = createAsyncThunk(
       const token = state.auth.accessToken;
 
       try{
-         const response = await fetch(`${API_URL}/api/cart/products/${productData.id}`, {  
+         const response = await fetch(`${API_URL}/api/cart/products`, {  
             headers: {
                "Content-Type": "application/json",
                'Authorization': `Bearer ${token}`
@@ -135,7 +135,7 @@ export const updateProductToCart = createAsyncThunk(
 const cartSlice = createSlice({
    name: 'cart',           // нзв стейта
    initialState: {               // state, нач значения полей
-      products: [],                 // с сервера придут эти 3 поля. products-[{},{}]- товары  Корзины
+      products: [],                 // с сервера методом fetchCart придут эти 3 поля. products-[{},{}]- товары  Корзины
       totalPrice: 0,                
       totalCount: 0,
       loadingFetch: false,               // получени товаров с Корзины
@@ -172,7 +172,7 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(addProductToCart.fulfilled, (state, action) => {  
-            console.log('action.payload in addProductToCart', action.payload)  // ответ от сервера:  { product: {},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
+            console.log('action.payload in addProductToCart', action.payload)  // ответ от сервера:  { product: {},  productCart: {productId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину" }
             state.products.push(action.payload.product);         
             state.totalPrice = action.payload.totalPrice; 
             state.totalCount = action.payload.totalCount;         
@@ -184,16 +184,17 @@ const cartSlice = createSlice({
             state.error = action.error.message;
          }) 
          
+
          //-------------------
          .addCase(removeProductFromCart.pending, (state) => {  
             state.loadingRemove = true;
             state.error = null;
          })
          .addCase(removeProductFromCart.fulfilled, (state, action) => {  
-            
-            state.products = action.payload.products;         
-            state.totalPrice = action.payload.totalPrice; 
-            state.totalCount = action.payload.totalCount;         
+            console.log('action.payload in remove from Cart ', action.payload)
+            state.products = state.products.filter((cartItem) => cartItem.id !== action.payload.id);    // action.payload.id это id удаляемого товара, с сервера приходит     
+            //state.totalPrice = action.payload.totalPrice; 
+            state.totalCount = action.payload;         
             state.loadingRemove = false;
             state.error = null;
          }) 
@@ -202,15 +203,19 @@ const cartSlice = createSlice({
             state.error = action.error.message;
          }) 
 
+
          //---------------------
          .addCase(updateProductToCart.pending, (state) => {  
             state.loadingUpdate = true;
             state.error = null;
          })
          .addCase(updateProductToCart.fulfilled, (state, action) => {  
-            state.products = action.payload.products;         
+            console.log('action.payload in update Cart ', action.payload)
+            state.products = state.products.map(() => {  //  { product: {},  productCart: {productId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину" }
+
+            });         
             state.totalPrice = action.payload.totalPrice; 
-            state.totalCount = action.payload.totalCount;         
+            //state.totalCount = action.payload.totalCount;     totalCount не меняется     
             state.loadingUpdate = false;
             state.error = null;
          }) 
