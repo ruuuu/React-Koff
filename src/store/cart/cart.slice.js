@@ -22,7 +22,7 @@ export const fetchCart = createAsyncThunk(
             throw new Error('Не удалось получить список товаров Корзины')
          }
 
-         return await response.json(); // без await вернет промис.   { products: [ {id, article, quantity, productId, images: [], name, price, characteristics: []}, {}, {} ],    totalPrice:0,    totalCount:0 }
+         return await response.json(); // без await вернет промис.   { products: [ {id, article, quantity, productId, images: ['',''], name, price, characteristics: []}, {}, {} ],    totalPrice:0,    totalCount:0 }
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -88,7 +88,7 @@ export const removeProductFromCart = createAsyncThunk(
             throw new Error('Не удалось удалить товар из Корзины')
          }
 
-         return await response.json(); 
+         return await response.json();  // вернет  {id, message, totalCount}
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -107,7 +107,7 @@ export const updateProductToCart = createAsyncThunk(
       const token = state.auth.accessToken;
 
       try{
-         const response = await fetch(`${API_URL}/api/cart/products`, {  
+         const response = await fetch(`${API_URL}api/cart/products`, {  
             headers: {
                "Content-Type": "application/json",
                'Authorization': `Bearer ${token}`
@@ -120,7 +120,7 @@ export const updateProductToCart = createAsyncThunk(
             throw new Error('Не удалось обновить товар в  Корзине')
          }
 
-         return await response.json(); 
+         return await response.json();  //  вернет  { productCart: {productId, quantity},  message,  totalCount} 
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -194,7 +194,7 @@ const cartSlice = createSlice({
             console.log('action.payload in remove from Cart ', action.payload)
             state.products = state.products.filter((cartItem) => cartItem.id !== action.payload.id);    // action.payload.id это id удаляемого товара, с сервера приходит     
             //state.totalPrice = action.payload.totalPrice; 
-            state.totalCount = action.payload;         
+            state.totalCount = action.payload.totalCount;         
             state.loadingRemove = false;
             state.error = null;
          }) 
@@ -210,9 +210,12 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(updateProductToCart.fulfilled, (state, action) => {  
-            console.log('action.payload in update Cart ', action.payload)
-            state.products = state.products.map(() => {  //  { product: {},  productCart: {productId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину" }
-
+            console.log('action.payload in update Cart ', action.payload) // с сервера придет  { productCart: {productId, quantity},  message,  totalCount} 
+            state.products = state.products.map((item) => {    
+               if(item.id === action.payload.productCart.productId){
+                  item.quantity = action.payload.productCart.quantity;
+               }
+               return item;
             });         
             state.totalPrice = action.payload.totalPrice; 
             //state.totalCount = action.payload.totalCount;     totalCount не меняется     

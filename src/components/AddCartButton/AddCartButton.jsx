@@ -17,7 +17,6 @@ export const AddCartButton = ({ className, id }) => {  // кнопка "В Ко�
 
    const handlerCartClick = () => {
       
-
       if(!isCart){  // если товара  нет в Корзине
          dispatch(addProductToCart({ productId: id, quantity: 1 })); 
       }

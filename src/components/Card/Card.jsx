@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../store/product/product.slice.js";
 import { Slider } from "../Slider/Slider";
 import { FavoriteButon } from "../FavoriteButton/FavoriteButon";
-import { AddCartButton } from "../AddCartButton/AddCartButton";
+import { AddCartButton } from "../addCartButton/addCartButton";
 
 
 // в папке components добавляем переиспользуемые компоненты

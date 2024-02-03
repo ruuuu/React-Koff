@@ -9,7 +9,9 @@ import { AddCartButton } from "../addCartButton/addCartButton";
 
 
 // карточка товара  на странице товаров
-export const CardItem = ({ name, images: [image], price, id }) => {  // деструкрируем product
+//                               images: [image] достает 1-ую картинку
+export const CardItem = ({ name, images: [image], price, id }) => {  // деструкрируем product = { name, price, id, article, images:['',''], category, characteristics }
+
 
   
   
@@ -31,7 +33,6 @@ export const CardItem = ({ name, images: [image], price, id }) => {  // дест
          </div>
                 
          <AddCartButton  className={s.btn} id={id} /> 
-
          <FavoriteButon className={s.btnfavorite}  id={id}  />
       </article>
    )
