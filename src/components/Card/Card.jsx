@@ -16,7 +16,7 @@ import { AddCartButton } from "../addCartButton/addCartButton";
 // страница товара
 export const Card = () => {
 
-   const dispatch = useDispatch();      // dispatch  нужен чтобы вызывать action(редьюсеры), после обтрабоки  dispatch обновляется состояние
+   const dispatch = useDispatch();      // dispatch  нужен чтобы вызывать action(редьюсеры), после обтрабоки  dispatch, обновляется состояние
 
    const { productId } = useParams();                          // хук, нужен чтобы получить id товара из урла /product/:productId
 

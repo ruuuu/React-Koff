@@ -6,6 +6,7 @@ import { Contacts } from "../../components/Contacts/Contacts";
 import { Developers } from "../../components/Developers/Developers";
 
 
+// в папке views добавбляем  компоненты которые не дублируются
 
 export const Footer = () => {
 

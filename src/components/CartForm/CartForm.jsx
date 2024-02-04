@@ -1,9 +1,32 @@
 import s from "./CartForm.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from "react-router-dom";
 
 
-// форма в Корзине
+// форма отправки заказа в Корзине
+// испотльзуем библиотетку react-hook-form
+
 
 export const CartForm = () => {
+
+
+   const dispatch = useDispatch();  
+   const navigate = useNavigate();               // хук для перехода на указанный урл
+   
+   const { register, handleSubmit, formState: {errors} } = useForm();  // хук котрый управляет формой, register это функция для работы с полями формы
+   console.log('errors ', formState.errors)
+   
+   const orderSatatus = useSelector(state => state.formCart);              // { loading, error, success, orderId }
+
+   useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchProduct), а внутри useEffect() можно 
+      if(orderSatatus.success){
+         navigate(`/order/${orderSatatus.orderId}`)
+      }
+      //dispatch(submitCartForm({}));      
+      
+   }, [ dispatch, orderSatatus, navigate ]);  // коллбэк вызывается когда  меняется orderSatatus, navigate нужен чтобы после отправки перейти на др станицу
+  
 
 
    return (
@@ -11,11 +34,31 @@ export const CartForm = () => {
          <h3 className={s.subtitle}>Данные для доставки</h3>
 
          <fieldset className={s.fieldsetInput}>
-            <input className={s.input} type="text" name="name" placeholder="Фамилия Имя Отчество" />
-            <input className={s.input} type="tel" name="phone" placeholder="Телефон" />
-            <input className={s.input} type="email" name="email" placeholder="E-mail" />
-            <input className={s.input} type="text" name="address" placeholder="Адрес доставки" />
-            <textarea className={s.textarea} name="comments" placeholder="Комментарий к заказу"></textarea>
+            <label>
+                                                                                          {/* троеточие перед register, тк она возвращает несколько пропсов */}
+               <input className={s.input} type="text" placeholder="Фамилия Имя Отчество"  {...register('name', {required: true})} />  {/* name это значение атрибута name */}
+               { errors.name && <p className={s.error}> Это поле обязательное </p> }   
+            </label>
+
+            <label>                                                                
+               <input className={s.input} type="tel"  placeholder="Телефон"  {...register('phone', {required: true})}  />  {/* phone это значение атрибута name */}
+               { errors.phone && <p className={s.error}> Это поле обязательное </p> }
+            </label>
+
+            <label>
+               <input className={s.input} type="email"  placeholder="E-mail" {...register('email', {required: true})} />
+               { errors.email && <p className={s.error}> Это поле обязательное </p> }
+            </label>
+
+            <label>
+               <input className={s.input} type="text"  placeholder="Адрес доставки" {...register('address', {required: true})}  />
+               { errors.address && <p className={s.error}> Это поле обязательное </p> }
+            </label>
+
+            <label>
+               <textarea className={s.textarea}  placeholder="Комментарий к заказу" {...register('comments', {required: true})}  ></textarea>
+               { errors.comments && <p className={s.error}> Это поле обязательное </p> }
+            </label>
          </fieldset>
 
 
@@ -23,12 +66,15 @@ export const CartForm = () => {
             <legend className={s.legend}> Доставка </legend>
 
             <label className={s.radio}>
-               <input className={s.radioInput} type="radio" name="deliveryType" value="delivery" /> Доставка
+               <input className={s.radioInput} type="radio"  value="delivery" /> Доставка
+               {...register('deliveryType', {required: true})} 
             </label>
 
             <label className={s.radio}>
-               <input className={s.radioInput} type="radio" name="deliveryType" value="pickup" /> Самовывоз
+               <input className={s.radioInput} type="radio"  value="pickup" /> Самовывоз
+               {...register('deliveryType', {required: true})} 
             </label>
+            { errors.deliveryType && <p className={s.error}> Выберите тип доставки </p> }
          </fieldset>
 
 

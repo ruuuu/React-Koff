@@ -6,6 +6,7 @@ import { SearchForm } from "../../components/SearchForm/SearchForm";
 import { Navigation } from "../../components/Navigation/Navigation";
 
 
+// в папке views добавбляем  компоненты которые не дублируются
 
 
 export const Header = () => {

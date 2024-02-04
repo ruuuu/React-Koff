@@ -9,6 +9,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 
 
 
+// в папке views добавбляем  компоненты которые не дублируются
 
 // список товаров
 export const Goods = () => {  

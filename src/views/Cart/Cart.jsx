@@ -6,6 +6,7 @@ import { CartForm } from "../../components/CartForm/CartForm";
 import { useSelector } from "react-redux";
 
 
+// в папке views добавбляем  компоненты которые не дублируются
 
 // Корзина
 export const Cart = () => {

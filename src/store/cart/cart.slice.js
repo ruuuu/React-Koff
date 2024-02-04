@@ -173,8 +173,11 @@ const cartSlice = createSlice({
          })
          .addCase(addProductToCart.fulfilled, (state, action) => {  
             console.log('action.payload in addProductToCart', action.payload)  // ответ от сервера:  { product: {},  productCart: {productId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину" }
-            state.products.push(action.payload.product);         
-            state.totalPrice = action.payload.totalPrice; 
+            //                   деструктурируем action.payload.product
+            state.products.push({...action.payload.product,  quantity: action.payload.productCart.quantity});         
+            state.totalPrice = state.products.reduce((acc, item) => {
+               return item.price * item.quantity + acc;
+            }, 0);  // acc = 0
             state.totalCount = action.payload.totalCount;         
             state.loadingAdd = false;
             state.error = null;
@@ -191,10 +194,12 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(removeProductFromCart.fulfilled, (state, action) => {  
-            console.log('action.payload in remove from Cart ', action.payload)
+            console.log('action.payload in remove from Cart ', action.payload) // {id, message, totalCount}
             state.products = state.products.filter((cartItem) => cartItem.id !== action.payload.id);    // action.payload.id это id удаляемого товара, с сервера приходит     
-            //state.totalPrice = action.payload.totalPrice; 
-            state.totalCount = action.payload.totalCount;         
+            state.totalCount = action.payload.totalCount; 
+            state.totalPrice = state.products.reduce((acc, item) => {
+               return item.price * item.quantity + acc;
+            }, 0);  // acc = 0     
             state.loadingRemove = false;
             state.error = null;
          }) 
@@ -217,8 +222,10 @@ const cartSlice = createSlice({
                }
                return item;
             });         
-            state.totalPrice = action.payload.totalPrice; 
-            //state.totalCount = action.payload.totalCount;     totalCount не меняется     
+            state.totalPrice = state.products.reduce((acc, item) => {
+               return item.price * item.quantity + acc;
+            }, 0);  // acc = 0 
+            state.totalCount = action.payload.totalCount;       
             state.loadingUpdate = false;
             state.error = null;
          }) 

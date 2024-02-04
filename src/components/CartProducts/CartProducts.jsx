@@ -15,7 +15,7 @@ export const CartProducts = ({ products }) => {  // товары Корзины 
    const handleMinus = (id, quantity) => {  // id товара Корзины
 
       if(quantity > 1){
-        dispatch(updateProductToCart({ productId: id, quantity: quantity-1 }));
+        dispatch(updateProductToCart({ productId: id, quantity: quantity-1 })); // вернет { productCart: {productId, quantity},  message,  totalCount} 
       }
       else{
          dispatch(removeProductFromCart(id));
