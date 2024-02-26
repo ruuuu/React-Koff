@@ -14,14 +14,14 @@ export const CartForm = () => {
    const dispatch = useDispatch();  
    const navigate = useNavigate();               // хук для перехода на указанный урл
    
-   const { register, handleSubmit, formState: {errors} } = useForm();  // хук котрый управляет формой, register это функция для работы с полями формы
+   const { register, handleSubmit, formState: {errors} } = useForm();  // useForm- хук котрый управляет формой, register это функция для работы с полями формы
    console.log('errors ', formState.errors)
    
    const orderSatatus = useSelector(state => state.formCart);              // { loading, error, success, orderId }
 
    useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchProduct), а внутри useEffect() можно 
       if(orderSatatus.success){
-         navigate(`/order/${orderSatatus.orderId}`)
+         navigate(`/order/${orderSatatus.orderId}`)               // переход на страницу  /order/${orderSatatus.orderId}
       }
       //dispatch(submitCartForm({}));      
       

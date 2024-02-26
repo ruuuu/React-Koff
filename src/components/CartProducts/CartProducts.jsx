@@ -23,6 +23,7 @@ export const CartProducts = ({ products }) => {  // товары Корзины 
    }
 
 
+
    const handlePlus = (id, quantity) => {
        
       dispatch(updateProductToCart({ productId: id, quantity: quantity+1 }));
@@ -33,7 +34,7 @@ export const CartProducts = ({ products }) => {  // товары Корзины 
    return (
 
       <ul class={s.products}>
-     {/* вместо item, можно деструтурировать его: { id, images: [image](1-ый элемент), name, price, article, quantity, productId } */}
+            {/* вместо item, можно деструтурировать его: { id, images: [image](только 1-ый элемент нам нужен), name, price, article, quantity, productId } */}
             { products.map(({ id, images: [image], name, price, article, quantity, productId }) => (
                <li className={s.product} key={productId}>
                      <img class={s.img}  src={`${API_URL}${image}`}  alt={name} />
@@ -41,6 +42,7 @@ export const CartProducts = ({ products }) => {  // товары Корзины 
                      <p className={s.price}> {price.toLocaleString()}&nbsp;Р </p>
                      <p className={s.article}> арт. {article} </p>
                      <div className={s.productControl}>
+                     {/*                                          если просто handleMinus(productId, quantity), то опрвится event:  */}
                         <button className={s.productBtn}  onClick={() => { handleMinus(productId, quantity) }}> - </button>  
                         <p className={s.productCount}> {quantity}  </p>
                         <button className={s.productBtn}  onClick={() => { handlePlus(productId, quantity) }}> + </button>  

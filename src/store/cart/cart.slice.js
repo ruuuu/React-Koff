@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../const.js";
 
 
-// получение товаров из Корзины
+
+// получение товаров из Корзины:
 export const fetchCart = createAsyncThunk(
    'cart/fetchCart',
-  //  либо  async(productData, { getState, rejectWithValue }) // деструкрировали thunkAPI
+  //  либо  async(_, { getState, rejectWithValue }) // деструкрировали thunkAPI
    async(_, thunkAPI) => {               // первый парамтер не передаем(_), у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
       const state = thunkAPI.getState();                     // получили state
      
@@ -22,7 +23,7 @@ export const fetchCart = createAsyncThunk(
             throw new Error('Не удалось получить список товаров Корзины')
          }
 
-         return await response.json(); // без await вернет промис.   { products: [ {id, article, quantity, productId, images: ['',''], name, price, characteristics: []}, {}, {} ],    totalPrice:0,    totalCount:0 }
+         return await response.json(); // без await вернет промис.  сервер вернет  { products: [ {id, article, quantity, productId, images: ['',''], name, price, characteristics: []}, {}, {} ],    totalPrice:0,    totalCount:0 }
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -33,10 +34,10 @@ export const fetchCart = createAsyncThunk(
 
 
 
-
+// Добавление товара в Корзину:
 export const addProductToCart = createAsyncThunk(  
    'cart/addProductToCart',
-   //  либо  async(productData, { getState, rejectWithValue }) 
+   //  либо  async(productData, { getState, rejectWithValue })  // { getState, rejectWithValue } дестуркировали thunkAPI
    async(productData, thunkAPI) => {               
       const state = thunkAPI.getState();                  
      
@@ -56,7 +57,7 @@ export const addProductToCart = createAsyncThunk(
             throw new Error('Не удалось добавить товар в  Корзину')
          }
 
-         return await response.json();   // ответ: { product: {},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
+         return await response.json();   // сервер вернет ответ: { product: {},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
          
       }
       catch(error){
@@ -67,10 +68,10 @@ export const addProductToCart = createAsyncThunk(
 )
 
 
-
+// Удаление товара из Корзины:
 export const removeProductFromCart = createAsyncThunk(
    'cart/removeProductFromCart ',
-   //  либо  async(_, { getState, rejectWithValue })
+   //  либо  async(productId, { getState, rejectWithValue })
    async(productId, thunkAPI) => {              
       const state = thunkAPI.getState();                    
      
@@ -88,7 +89,7 @@ export const removeProductFromCart = createAsyncThunk(
             throw new Error('Не удалось удалить товар из Корзины')
          }
 
-         return await response.json();  // вернет  {id, message, totalCount}
+         return await response.json();  // сервер вернет  {id, message, totalCount}
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -98,9 +99,10 @@ export const removeProductFromCart = createAsyncThunk(
 )
 
 
+// обновление числа товаров в Корзине:
 export const updateProductToCart = createAsyncThunk(
    'cart/updateProductToCart ',
-   //  либо  async(_, { getState, rejectWithValue })
+   //  либо  async(productData, { getState, rejectWithValue })
    async(productData, thunkAPI) => {               
       const state = thunkAPI.getState();                   
      
@@ -120,7 +122,7 @@ export const updateProductToCart = createAsyncThunk(
             throw new Error('Не удалось обновить товар в  Корзине')
          }
 
-         return await response.json();  //  вернет  { productCart: {productId, quantity},  message,  totalCount} 
+         return await response.json();  // сервер  вернет  { productCart: {productId, quantity},  message,  totalCount} 
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -166,7 +168,8 @@ const cartSlice = createSlice({
             state.error = action.error.message;
          })
 
-         //--------------- 
+
+         //--------------- addProductToCart:
          .addCase(addProductToCart.pending, (state) => {  
             state.loadingAdd = true;
             state.error = null;
@@ -188,7 +191,7 @@ const cartSlice = createSlice({
          }) 
          
 
-         //-------------------
+         //-------------------removeProductFromCart:
          .addCase(removeProductFromCart.pending, (state) => {  
             state.loadingRemove = true;
             state.error = null;
@@ -196,10 +199,13 @@ const cartSlice = createSlice({
          .addCase(removeProductFromCart.fulfilled, (state, action) => {  
             console.log('action.payload in remove from Cart ', action.payload) // {id, message, totalCount}
             state.products = state.products.filter((cartItem) => cartItem.id !== action.payload.id);    // action.payload.id это id удаляемого товара, с сервера приходит     
-            state.totalCount = action.payload.totalCount; 
+            
+            state.totalCount -= action.payload.totalCount; 
+            
             state.totalPrice = state.products.reduce((acc, item) => {
                return item.price * item.quantity + acc;
-            }, 0);  // acc = 0     
+            }, 0);  // acc = 0  
+
             state.loadingRemove = false;
             state.error = null;
          }) 
@@ -209,22 +215,25 @@ const cartSlice = createSlice({
          }) 
 
 
-         //---------------------
+         //---------------------updateProductToCart:
          .addCase(updateProductToCart.pending, (state) => {  
             state.loadingUpdate = true;
             state.error = null;
          })
          .addCase(updateProductToCart.fulfilled, (state, action) => {  
             console.log('action.payload in update Cart ', action.payload) // с сервера придет  { productCart: {productId, quantity},  message,  totalCount} 
+            
             state.products = state.products.map((item) => {    
                if(item.id === action.payload.productCart.productId){
                   item.quantity = action.payload.productCart.quantity;
                }
                return item;
-            });         
+            });    
+
             state.totalPrice = state.products.reduce((acc, item) => {
                return item.price * item.quantity + acc;
             }, 0);  // acc = 0 
+
             state.totalCount = action.payload.totalCount;       
             state.loadingUpdate = false;
             state.error = null;

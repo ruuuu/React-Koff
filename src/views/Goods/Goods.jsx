@@ -87,7 +87,8 @@ export const Goods = () => {
                               <CardItem  {...productItem} /> {/* либо по старинке(недеструктурируя) так: product={productItem} */}
                            </li>
                         )
-                     )}
+                      )
+                     }
                   </ul>
                   { pagination ?  <Pagination  pagination={pagination}  />  : "" } 
                </>

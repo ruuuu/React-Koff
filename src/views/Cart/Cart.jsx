@@ -44,9 +44,9 @@ export const Cart = () => {
       <section className={s.cart}>
          <Container className={s.container}>
             <h2 class={s.title}> Корзина </h2>
-            <CartProducts products={products}  />              {/*  список товаров */}
-            <CartPlace totalPrice={totalPrice}  totalCount={totalCount} />
-            <CartForm />
+            <CartProducts products={products}  />                  {/*  список товаров */}
+            <CartPlace totalPrice={totalPrice}  totalCount={totalCount} />           {/*  правая часть */}
+            <CartForm />            {/* форма отправки */}
          </Container>
       </section>
    )
