@@ -23,15 +23,14 @@ export const CartForm = () => {
       if(orderSatatus.success){
          navigate(`/order/${orderSatatus.orderId}`)               // переход на страницу  /order/${orderSatatus.orderId}
       }
-      //dispatch(submitCartForm({}));      
-      
+          
    }, [ dispatch, orderSatatus, navigate ]);  // коллбэк вызывается когда  меняется orderSatatus, navigate нужен чтобы после отправки перейти на др станицу
   
 
 
    return (
       <form className={s.form} id="order" action="#" method="POST">
-         <h3 className={s.subtitle}>Данные для доставки</h3>
+         <h3 className={s.subtitle}> Данные для доставки </h3>
 
          <fieldset className={s.fieldsetInput}>
             <label>

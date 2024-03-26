@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../../const.js";
 
 
-// Отправка формы заказа
+// Отправка формы заказа(на странице Корзина)
 export const submitCartForm = createAsyncThunk(
    'formCart/submitCartForm',
   //  либо  async(productData, { getState, rejectWithValue }) // деструкрировали thunkAPI
@@ -54,18 +54,18 @@ const formCartSlice = createSlice({
    },
    extraReducers: (builder) => {  //редьюсеры
       builder 
-         .addCase(submitCartForm .pending, (state) => {  // когда  ожидаем ответот сервера, запускается коллбэк
+         .addCase(submitCartForm.pending, (state) => {  // когда  ожидаем ответ от сервера, запускается коллбэк
             state.loading= true;
             state.error = null;
             state.success = false;
          })
-         .addCase(submitCartForm .fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
+         .addCase(submitCartForm.fulfilled, (state, action) => {   // когда данные с сервера вернулись, запускается коллбэк
             state.loading= false;
             state.error= null;
             state.success= true;
             state.orderId = action.payload;
          }) 
-         .addCase(submitCartForm .rejected, (state, action) => {
+         .addCase(submitCartForm.rejected, (state, action) => {
             state.loading = falsep
             state.error = action.payload;
             state.success = false;

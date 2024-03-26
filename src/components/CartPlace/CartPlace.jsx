@@ -19,7 +19,7 @@ export const CartPlace = ({ totalPrice, totalCount }) => {
          <h3 className={s.subtitle}> Оформление </h3>
          <div className={s.placeInfo}>
             <p> {totalCount} {declOfNum(totalCount, ['товар', 'товара' , 'товаров'])} на сумму: </p>
-            <p> {totalPrice} Р </p>  { /* .toLocaleString() */ }
+            <p> {totalPrice} Р </p>  { /* {totalPrice.toLocaleString()} Р */ }
          </div>
          <p className={s.placeDelivery}> Доставка 0 Р </p>
          <button className={s.placeBtn} type="submit" form="order"> Оформить заказ </button>    {/*  form="order", он нужен чтобы связать зту кнопку с формой  у котрой  id="order" */}

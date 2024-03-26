@@ -57,8 +57,7 @@ export const addProductToCart = createAsyncThunk(
             throw new Error('Не удалось добавить товар в  Корзину')
          }
 
-         return await response.json();   // сервер вернет ответ: { product: {},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
-         
+         return await response.json();   // сервер вернет ответ: { product: {id: 29, article: "16955246986", name: "Прямой диван OSCAR", price: 183600,…},  productCart: {poductId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину"}
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
@@ -93,8 +92,7 @@ export const removeProductFromCart = createAsyncThunk(
       }
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
-      }
-      
+      } 
    }
 )
 
@@ -127,7 +125,6 @@ export const updateProductToCart = createAsyncThunk(
       catch(error){
          return thunkAPI.rejectWithValue(error.message);
       }
-      
    }
 )
 
@@ -137,7 +134,7 @@ export const updateProductToCart = createAsyncThunk(
 const cartSlice = createSlice({
    name: 'cart',           // нзв стейта
    initialState: {               // state, нач значения полей
-      products: [],                 // с сервера методом fetchCart придут эти 3 поля. products-[{},{}]- товары  Корзины
+      products: [],                 // с сервера методом fetchCart придут эти 3 поля(products, totalPrice, totalCount). products-[{},{}]- товары  Корзины
       totalPrice: 0,                
       totalCount: 0,
       loadingFetch: false,               // получени товаров с Корзины
@@ -151,7 +148,7 @@ const cartSlice = createSlice({
    },
    extraReducers: (builder) => {  //редьюсеры
       builder 
-         .addCase(fetchCart.pending, (state) => {  // когда  ожидаем ответот сервера, запускается коллбэк
+         .addCase(fetchCart.pending, (state) => {  // когда  ожидаем ответ от сервера, запускается коллбэк
             state.loadingFetch = true;
             state.error = null;
          })
@@ -176,7 +173,7 @@ const cartSlice = createSlice({
          })
          .addCase(addProductToCart.fulfilled, (state, action) => {  
             console.log('action.payload in addProductToCart', action.payload)  // ответ от сервера:  { product: {},  productCart: {productId: 30, quantity: 1},  totalCount: 1,  message: "Товар добавлен в корзину" }
-            //                   деструктурируем action.payload.product
+            //            деструктурируем action.payload.product
             state.products.push({...action.payload.product,  quantity: action.payload.productCart.quantity});         
             state.totalPrice = state.products.reduce((acc, item) => {
                return item.price * item.quantity + acc;
@@ -197,10 +194,10 @@ const cartSlice = createSlice({
             state.error = null;
          })
          .addCase(removeProductFromCart.fulfilled, (state, action) => {  
-            console.log('action.payload in remove from Cart ', action.payload) // {id, message, totalCount}
+            console.log('action.payload in remove from Cart ', action.payload) // { id, message, totalCount } - с сервера приходит
             state.products = state.products.filter((cartItem) => cartItem.id !== action.payload.id);    // action.payload.id это id удаляемого товара, с сервера приходит     
             
-            state.totalCount -= action.payload.totalCount; 
+            state.totalCount = action.payload.totalCount; 
             
             state.totalPrice = state.products.reduce((acc, item) => {
                return item.price * item.quantity + acc;
@@ -225,7 +222,7 @@ const cartSlice = createSlice({
             
             state.products = state.products.map((item) => {    
                if(item.id === action.payload.productCart.productId){
-                  item.quantity = action.payload.productCart.quantity;
+                  item.quantity = action.payload.productCart.quantity;  
                }
                return item;
             });    

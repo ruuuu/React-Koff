@@ -1,6 +1,6 @@
 import s from "./CartProducts.module.scss";
 import { API_URL } from "../../const";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeProductFromCart, updateProductToCart } from "../../store/cart/cart.slice";
 
 
@@ -42,7 +42,7 @@ export const CartProducts = ({ products }) => {  // товары Корзины 
                      <p className={s.price}> {price.toLocaleString()}&nbsp;Р </p>
                      <p className={s.article}> арт. {article} </p>
                      <div className={s.productControl}>
-                     {/*                                          если просто handleMinus(productId, quantity), то опрвится event:  */}
+                     {/*                                          если просто handleMinus(productId, quantity), то отпрвится event:  */}
                         <button className={s.productBtn}  onClick={() => { handleMinus(productId, quantity) }}> - </button>  
                         <p className={s.productCount}> {quantity}  </p>
                         <button className={s.productBtn}  onClick={() => { handlePlus(productId, quantity) }}> + </button>  
