@@ -7,17 +7,17 @@ import { useNavigate } from 'react-router-dom';
 
 export const SearchForm = () => {
 
-   const navigate = useNavigate();  // в 6-ой версии это используется
+   const navigate = useNavigate();  // в 6-ой версии react этот хук используется
 
    const handleSubmit = (event) => {
       console.log('event ', event);
       event.preventDefault();
      
-      const searcQuery = event.target.search.value;            // event.target-form, search-name  у поля
+      const searchQuery = event.target.search.value;            // event.target-form, search-это name  у поля
 
-      if(searcQuery.trim()){ 
-         navigate(`search?q=${encodeURIComponent(searcQuery)}`);  // переход по урлу search?q=, декодируем searcQuery
-         event.target.reset();         // form.reset()
+      if(searchQuery.trim()){ 
+         navigate(`search?q=${encodeURIComponent(searchQuery)}`);  // переход по урлу search?q=, декодируем searcQuery
+         event.target.reset();         // form.reset() очищаем форму
       }
    }
 

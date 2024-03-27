@@ -6,20 +6,25 @@ import { API_URL } from "../../const.js";
 // Отправка формы заказа(на странице Корзина)
 export const submitCartForm = createAsyncThunk(
    'formCart/submitCartForm',
-  //  либо  async(productData, { getState, rejectWithValue }) // деструкрировали thunkAPI
+   //  либо  async(formData, { getState, rejectWithValue }) // деструкрировали thunkAPI
    async(formData, thunkAPI) => {               // первый парамтер не передаем(_), у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
       const state = thunkAPI.getState();                     // получили state
-     
+      console.log('state in formCart', state)
+      
       const token = state.auth.accessToken;
 
       try{
          const response = await fetch(`${API_URL}api/orders`, {  
+            method: 'POST',
             headers: {
-               'Authorization': `Bearer ${token}`
+               'Content-Type': 'application/json',
+               Authorization: `Bearer ${token}`
             },
-            method: "POST",
+            
             body: JSON.stringify(formData)
          });
+
+         console.log('response ', response)
 
          if(!response.ok){
             throw new Error('Ошибка при отправке заказа')
@@ -66,7 +71,7 @@ const formCartSlice = createSlice({
             state.orderId = action.payload;
          }) 
          .addCase(submitCartForm.rejected, (state, action) => {
-            state.loading = falsep
+            state.loading = false;
             state.error = action.payload;
             state.success = false;
          })

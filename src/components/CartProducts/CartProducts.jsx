@@ -42,7 +42,7 @@ export const CartProducts = ({ products }) => {  // товары Корзины 
                      <p className={s.price}> {price.toLocaleString()}&nbsp;Р </p>
                      <p className={s.article}> арт. {article} </p>
                      <div className={s.productControl}>
-                     {/*                                          если просто handleMinus(productId, quantity), то отпрвится event:  */}
+                     {                                       /* если просто handleMinus(productId, quantity), то отпрвится event:  */}
                         <button className={s.productBtn}  onClick={() => { handleMinus(productId, quantity) }}> - </button>  
                         <p className={s.productCount}> {quantity}  </p>
                         <button className={s.productBtn}  onClick={() => { handlePlus(productId, quantity) }}> + </button>  

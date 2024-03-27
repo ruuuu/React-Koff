@@ -57,7 +57,7 @@ export const Slider = ({ data }) => {
                      ))
                   }
                </Swiper>
-               ) : <div>Загрузка</div>
+               ) : <div> Загрузка </div>
             }
          </div>
       </div>

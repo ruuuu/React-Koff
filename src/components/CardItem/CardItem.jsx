@@ -13,11 +13,6 @@ import { AddCartButton } from "../addCartButton/addCartButton";
 export const CardItem = ({ name, images: [image], price, id }) => {  // деструкрируем product = { name, price, id, article, images:['',''], category, characteristics }
 
 
-  
-  
-   
-   
-
    return (
 
       <article className={s.card}>

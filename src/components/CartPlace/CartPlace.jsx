@@ -22,7 +22,7 @@ export const CartPlace = ({ totalPrice, totalCount }) => {
             <p> {totalPrice} Р </p>  { /* {totalPrice.toLocaleString()} Р */ }
          </div>
          <p className={s.placeDelivery}> Доставка 0 Р </p>
-         <button className={s.placeBtn} type="submit" form="order"> Оформить заказ </button>    {/*  form="order", он нужен чтобы связать зту кнопку с формой  у котрой  id="order" */}
+         <button className={s.placeBtn} type="submit" form="orderForm" > Оформить заказ </button>    {/*  form="orderForm", он нужен чтобы связать зту кнопку с формой  у котрой  id="orderForm" */}
       </div>
    )
 }
