@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect} from "react";
 import { fetchAccesToken } from './store/auth/auth.slice.js';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { Order } from "./components/Order/Order";
 
 
 
@@ -91,7 +91,18 @@ const router = createBrowserRouter([
       </>
     ),
   },
-
+  {
+    path: "/order/:orderId",   // страница офрлменнного заказа
+    element: (
+      <>
+        <Header />
+        <main>
+          <Order />
+        </main>
+        <Footer />
+      </>
+    ),
+  },
 ]);
 
 

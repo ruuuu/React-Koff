@@ -26,7 +26,7 @@ export const Card = () => {
 
    useEffect(() => {  // в компоненте нельзя вызвать асинхронную функию(fetchProduct), а внутри useEffect() можно 
       dispatch(fetchProduct(productId));
-   }, [ dispatch, productId ]);  // коллбэк вызывается когда  меняется productId.  [ dispatch, productId ] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
+   }, [ dispatch, productId ]);  // коллбэк вызывается всегда когда  меняется productId.  [ dispatch, productId ] - массив зависимостей. Сюда заносятся поля, котрые используютя  в коллбэке
   
 
    if(!data){
