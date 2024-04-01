@@ -1,6 +1,6 @@
 import s from "./Card.module.scss";
 import { Container } from "../../views/Container/Container";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../store/product/product.slice.js";

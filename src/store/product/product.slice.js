@@ -39,9 +39,9 @@ export const fetchProduct = createAsyncThunk(
 
 
 const productSlice = createSlice({
-   name: 'product',
+   name: 'product',              // нзв стейта
    initialState: {               // state, нач значения полей
-      data: null,              // сюда будем зановить товар полученный  с сервера
+      data: null,              // сюда будем заносить товар полученный  с сервера
       loading: false,               // сервер отдал ответ
       error: null,
    },

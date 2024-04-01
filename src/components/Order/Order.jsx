@@ -1,9 +1,11 @@
 import s from "./Order.module.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOrder } from "../../store/order/order.slice";
+import { clearOrder, fetchOrder } from "../../store/order/order.slice";
 import { useParams } from "react-router-dom";
 import { Container } from "../../views/Container/Container";
+import { fetchCart } from "../../store/cart/cart.slice";
+import { Link } from "react-router-dom";
 
 
 
@@ -11,13 +13,22 @@ import { Container } from "../../views/Container/Container";
 export const Order = () => {
 
    const { orderId } = useParams();  // вытаскиваем orderId из урла /order/:orderId
-   const dispatch = useDispatch();   // нужен чтобы вызвать асинхронную функцию
+   const dispatch = useDispatch();   // нужен чтобы вызвать асинхронную функцию(fetchOrder)
 
-   const { orderData, loading, error } = useSelector((state) => state.order);   // задает доступ к  state
+   const { orderData, loading, error } = useSelector((state) => state.order);   // useSelector задает доступ к  state
+
+
+   useEffect(() => {   // в компоненте нельзя вызвать асинхронную функию(fetchCart), а внутри useEffect() можно 
+      dispatch(fetchCart());  
+   }, [dispatch]);  // 
 
 
    useEffect(() => {   // в компоненте нельзя вызвать асинхронную функию(fetchOrder), а внутри useEffect() можно 
-      dispatch(fetchOrder(orderId));   
+      dispatch(fetchOrder(orderId));  
+
+      return () => {
+         dispatch(clearOrder())
+      }
    }, [dispatch, orderId]);  // всегда когда orderId менется, тогда будет вызыватья коллбэк
 
 
@@ -81,7 +92,7 @@ export const Order = () => {
                      </table>
                   </div>
       
-                  <a className={s.back} href="/"> На главную </a>
+                  <Link className={s.back} to="/"> На главную </Link> {/*  вместо <a></a> используем Link, чтобы не перезагружалась станица, вместо href ставим to */}
                </div>
            </Container>
       </section>

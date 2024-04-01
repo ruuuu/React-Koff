@@ -9,13 +9,14 @@ import { useEffect} from "react";
 import { fetchAccesToken } from './store/auth/auth.slice.js';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Order } from "./components/Order/Order";
+import { Breadcrumbs } from "./components/Breadcrumbs/Breadcrumbs";
 
 
 
 // роутинг:
 const router = createBrowserRouter([
   {
-    path: "/",  // при переходе в корень, отображется <Main />
+    path: "/",  // при переходе в корень, , отображется все что в element
     element: (
       <>
         <Header />
@@ -41,12 +42,13 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/category",  
+    path: "/category",   // при переходе в /category, отображется все что в element
     element: (
       <>
         <Header />
         <main>
           <Catalog />
+          <Breadcrumbs />
           <Goods />
         </main>
         <Footer />
@@ -66,12 +68,13 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/product/:productId",  // (станица товара) 
+    path: "/product/:productId",  // при переход на станицу товара , отображется все что в element
     element: (
       <>
         <Header />
         <main>
           <Catalog />
+          <Breadcrumbs />
           <Card />  
         </main>
         <Footer />
@@ -92,7 +95,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/order/:orderId",   // страница офрлменнного заказа
+    path: "/order/:orderId",   // при пееходе на страница офрлменнного заказа, отображется все что в element
     element: (
       <>
         <Header />
@@ -127,7 +130,6 @@ const App = () => {
       dispatch(fetchAccesToken());
 
     }
-    
   }, [ dispatch, accessToken ]);  // коллбэк вызывается каждый раз когда  меняется accessToken(нарпимер стал null).  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
 
 

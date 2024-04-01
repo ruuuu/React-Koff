@@ -49,7 +49,11 @@ const orderSlice = createSlice({
       error: null,
    },
    reducers: {
-      
+     clearOrder: (state) => {  // после оформоения заказаб вызовется эта фукнция
+         state.loading = false;
+         state.error = null;
+         state.orderData = null;
+     }
    },
    extraReducers: (builder) => {  // три редьюсера:
       builder
@@ -69,4 +73,5 @@ const orderSlice = createSlice({
    }
 })
 
+export const { clearOrder } = orderSlice.actions;
 export default orderSlice.reducer
