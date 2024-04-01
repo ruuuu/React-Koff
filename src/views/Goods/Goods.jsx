@@ -17,7 +17,7 @@ export const Goods = () => {
    const dispatch = useDispatch()      // dispatch  нужен чтобы вызывать action, после обтрабоки  dispatch обновляется состояние
 
    const { data, loading, error, pagination } = useSelector((state) => {  
-      console.log('state.products ', state.products)  
+      //console.log('state.products ', state.products)  
       return state.products;  // { data: [{},{},{}],  loading: true,  error: null,  pagination: {currentPage: 1, totalPages: 2, totalProducts: 19, limit: 12} }
    }); 
 
@@ -36,7 +36,7 @@ export const Goods = () => {
    
 
    const favoriteList = useSelector((state) => {  
-      console.log('state.favorite ', state.favorite) //  
+      //console.log('state.favorite ', state.favorite) //  
       return state.favorite.favoriteList;  // [id, id, id]
    }); 
 
@@ -46,7 +46,7 @@ export const Goods = () => {
    useEffect(() => {                                  // в компоненте нельзя вызвать асинхронную функию(fetchpPoducts), а внутри useEffect() можно 
       
       if(pathname !== '/favorite'){
-         console.log('меня вызвали')
+         //console.log('меня вызвали')
          dispatch(fetchProducts({ category, q, page }));
       }
    }, [ dispatch, category, q, pathname, page ]);                                   //  коллбэк каждый раз вызывается когда  меняется category или q или  pathname.  [] - массив зависимостей. Сюда заносятся поля, котрые используютя  вколлбэке
@@ -56,7 +56,7 @@ export const Goods = () => {
    useEffect(() => {  
       
       if(pathname === '/favorite'){
-         console.log('меня еще раз вызвали')
+         //console.log('меня еще раз вызвали')
          dispatch(fetchProducts({ list: favoriteList.join(','),  page }));                     // favoriteList переименовали в list(сервер принимает), favoriteList.join(',') - из массива создали строку 'id, id, id'
       }
    }, [ dispatch,  favoriteList,  pathname,  page ]);        // коллбэк зависит от favoriteList,  pathname. Когда они меняются, колллбэк вызвется

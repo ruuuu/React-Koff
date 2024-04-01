@@ -144,11 +144,7 @@ const cartSlice = createSlice({
       error: null,
    },
    reducers: {
-      // clearCart: (state)=>{  // после оформлени заказа при нажатии на Корзину отрабоатет эта фукния
-      //    state.products = [];          
-      //    state.totalPrice = 0;
-      //    state.totalCount = 0;
-      // }
+     
    },
    extraReducers: (builder) => {  //редьюсеры
       builder 
