@@ -70,8 +70,8 @@ export const Card = () => {
                      </table>
 
                      <div className={s.btns}>
-                        <AddCartButton  className={s.btn} id={data.id} />    
-                        <FavoriteButon  className={s.like}  id={data.id} />
+                        <AddCartButton className={s.btn} id={data.id} />    
+                        <FavoriteButon className={s.like}  id={data.id} />
                      </div>
                </div>
             </div>

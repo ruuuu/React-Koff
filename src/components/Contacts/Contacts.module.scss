@@ -27,7 +27,12 @@
       color: #780096;
    }
 
-   &:focus{
+   // &:focus{
+   //    color: #780096;
+   //    outline-color: #780096;
+   // }
+   
+   &:focus-visible{
       color: #780096;
       outline-color: #780096;
    }

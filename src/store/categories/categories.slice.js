@@ -6,7 +6,7 @@ import { API_URL } from "../../const.js";
 
 export const fetchСategories = createAsyncThunk(
    'categories/fetchСategories',
-   async(_, thunkAPI) => {               // первый парамтер не передаем(_), у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
+   async(_, thunkAPI) => {               // первый парамтер означает что его не передаем(_), у thunkAPI есть метод getState() для получения state(из store.js), state нужен для получения token
      const state = thunkAPI.getState();                     // получили state
      
      const token = state.auth.accessToken;

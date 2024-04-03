@@ -12,7 +12,7 @@ export const Catalog = () => {
 
    
    const dispatch = useDispatch()      // dispatch  нужен чтобы вызывать action, после обтрабоки  dispatch обновляется состояние
-   const { data, loading, error } = useSelector((state)=> state.categories);  // задает доступ к state = {data, loading, error}, state.categories (из store.js). Переименовали data в dataCategories, loading в  loadingCategories
+   const { data, loading, error } = useSelector((state)=> state.categories);  // хук котрыый задает доступ к state = {data, loading, error}, state.categories (из store.js). Переименовали data в dataCategories, loading в  loadingCategories
    
    // const { data: dataCategories, loading: loadingCategories, error: errorCategories} = useSelector((state) => {  //
    //    console.log('state.categories ', state.categories) //  { data: ['Тумбы', 'Диваны'], loading: false, error: null }
